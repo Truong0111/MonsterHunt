@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ab874a1ba048c3adff0d1a0b4bccd4, type: 3}
+  m_Name: WeaponDataSO
+  m_EditorClassIdentifier: 
+  weaponDatas: []
+  defaultWeapon:
+    weapon: {fileID: -5193724988317483645, guid: 0ca7d11f7d1cabf498bdd83bab44543d, type: 3}
+    prefab: {fileID: 1904925864879867224, guid: 0ca7d11f7d1cabf498bdd83bab44543d, type: 3}
+    attackLayer:
+      serializedVersion: 2
+      m_Bits: 65536
+    id: 0
+    name: AK
+    weaponType: 0
+    damage: 10
+    attackDistance: 100
+    scaleOnHand: 0.25
+    gunData:
+      bullet: {fileID: 1549761536973432182, guid: 70ca27a94cc0e0d4aa89e9326d8373ff, type: 3}
+      bulletPrefab: {fileID: 1549761536973432181, guid: 70ca27a94cc0e0d4aa89e9326d8373ff, type: 3}
+      fireRate: 0.1
+      currentBullet: 30
+      magazine: 30
+      remainBullet: 120
+      isInfinityBullet: 0
+      bulletSpeed: 3000
+      lifeTime: 3
+      fireType: 1
+      bulletSpawnType: 1
+    meleeData:
+      attackDelay: 0
+      attackSpeed: 0
+  sword:
+    weapon: {fileID: 5276714432048104233, guid: 9ec1fe7d631833f41939b46cc762548a, type: 3}
+    prefab: {fileID: 7748474196321244065, guid: 9ec1fe7d631833f41939b46cc762548a, type: 3}
+    attackLayer:
+      serializedVersion: 2
+      m_Bits: 65536
+    id: 0
+    name: Sword
+    weaponType: 1
+    damage: 50
+    attackDistance: 1.5
+    scaleOnHand: 1
+    gunData:
+      bullet: {fileID: 0}
+      bulletPrefab: {fileID: 0}
+      fireRate: 0
+      currentBullet: 0
+      magazine: 0
+      remainBullet: 0
+      isInfinityBullet: 0
+      bulletSpeed: 0
+      lifeTime: 0
+      fireType: 0
+      bulletSpawnType: 0
+    meleeData:
+      attackDelay: 1
+      attackSpeed: 1
