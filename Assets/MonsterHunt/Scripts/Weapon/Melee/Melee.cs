@@ -44,12 +44,13 @@ public class Melee : Weapon
         if (!Physics.Raycast(Origin(), Direction(), out var hit, AttackDistance(), AttackLayer())) return;
         if (hit.collider.TryGetComponent<Hitbox>(out var hitBox))
         {
-            CastAttack(hitBox);
+            CastAttack(hitBox, hit.point);
         }
     }
 
-    private void CastAttack(Hitbox hit)
+    private void CastAttack(Hitbox hit, Vector3 point)
     {
+        SpawnFx(point);
         hit.GetDamage(currentWeaponData.damage);
     }
     

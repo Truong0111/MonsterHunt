@@ -122,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b3a0bba23e5f78f418add126e54dc5d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -265,7 +265,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b3a0bba23e5f78f418add126e54dc5d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -408,7 +408,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b3a0bba23e5f78f418add126e54dc5d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -552,7 +552,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b3a0bba23e5f78f418add126e54dc5d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -696,7 +696,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b3a0bba23e5f78f418add126e54dc5d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -840,7 +840,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b3a0bba23e5f78f418add126e54dc5d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -988,6 +988,7 @@ GameObject:
   - component: {fileID: 8232776250230313298}
   - component: {fileID: 8232776250230313309}
   - component: {fileID: 8232776250230313299}
+  - component: {fileID: 3431910769200392451}
   m_Layer: 11
   m_Name: ExampleEnemy
   m_TagString: Untagged
@@ -1026,23 +1027,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
   currentCharacterData:
-    id: 0
     nameCharacter: 
     maxHealth: 0
     speed: 0
     jumpForce: 0
     armor: 0
-  id: 0
-  health: 0
-  speed: 0
   animator: {fileID: 0}
   weapons: []
   characterAction: 0
   canMove: 0
-  enemyDataSo: {fileID: 11400000, guid: ed5096b219655fa4ca47d537ba6c87ec, type: 2}
-  currentEnemyData:
+  enemyDataSo: {fileID: 11400000, guid: edc2e4e362c79b74ca6bf36a37ba097a, type: 2}
+  enemyData:
     characterData:
-      id: 0
       nameCharacter: 
       maxHealth: 0
       speed: 0
@@ -1050,7 +1046,15 @@ MonoBehaviour:
       armor: 0
     enemyType: 0
     enemyDrop: 0
+    enemyAttackValue:
+      attackType: 0
+      damage: 0
+      attackRange: 0
+      attackDistance: 0
+      attackRate: 0
+      lengthToAttack: 0
     enemy: {fileID: 0}
+  enemyController: {fileID: 8232776250230313298}
 --- !u!114 &8232776250230313298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,10 +1067,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61176fce37064999865aeb43cb40d4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 8232776250230313309}
+  enemyAttack: {fileID: 3431910769200392451}
+  agent: {fileID: 8232776250230313309}
   animator: {fileID: 8232776250230313299}
-  attackRange: 10
-  playerTarget: {fileID: 0}
 --- !u!195 &8232776250230313309
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1110,3 +1113,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3431910769200392451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8232776250230313308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a1becfa62b45358d47741fb6e4e81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 8232776250230313300}
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 0

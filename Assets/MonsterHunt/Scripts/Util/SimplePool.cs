@@ -16,10 +16,6 @@ public static class SimplePool
     /// </summary>
     private class Pool
     {
-        // We append an id to the name of anything we instantiate.
-        // This is purely cosmetic.
-        private int nextId = 1;
-
         // The structure containing our inactive objects.
         // Why a Stack and not a List? Because we'll never need to
         // pluck an object from the start or middle of the array.
@@ -248,7 +244,7 @@ public static class SimplePool
         if (pools == null)
             pools = new Dictionary<GameObject, Pool>();
         if (prefab == null) return 0;
-        return pools.TryGetValue(prefab, out var pool) ? pool.StackCount : 0;
+        return pools.ContainsKey(prefab) ? pools[prefab].StackCount : 0;
     }
 
     public static void ClearPool()

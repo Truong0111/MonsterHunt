@@ -1,29 +1,29 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LookAtCamera : MonoBehaviour
 {
-    public Transform camera;
+    public Transform cameraTransform;
     
     private void Start()
     {
         var cameraMain = Camera.main;
 
-        if (camera == null)
+        if (cameraTransform != null) return;
+        
+        if (cameraMain != null)
         {
-            if (cameraMain != null)
-            {
-                camera = cameraMain.transform;
-            }
-            else
-            {
-                Debug.LogError("No camera can get in scene");
-                enabled = false;
-            }
+            cameraTransform = cameraMain.transform;
+        }
+        else
+        {
+            Debug.LogError("No camera can get in scene");
+            enabled = false;
         }
     }
 
     private void Update()
     {
-        transform.forward = camera.forward;
+        transform.forward = cameraTransform.forward;
     }
 }

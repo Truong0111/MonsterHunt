@@ -1,90 +1,89 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using static NavMeshHelper;
 
 public class EnemyController : MonoBehaviour
 {
-    public NavMeshAgent navMeshAgent;
-    private StateMachine _stateMachine;
+    public EnemyAttack enemyAttack;
+    public NavMeshAgent agent;
     public Animator animator;
 
-    public float attackRange = 10f;
+    public float AttackRange { get; set; }
+    public float NoAttackMove { get; set; }
 
     private bool _canMove;
     private bool _canAttack;
 
-    public Transform playerTarget;
-    private Vector3 _targetMove;
+    private bool _isPlayerInRange;
+    private bool _isTrackedPlayer;
 
-    private Vector3 AgentPosition() => navMeshAgent.transform.position;
+    private bool _isDead;
+
+    private Player CurrentPlayerToAttack { get; set; }
+
+    private StateMachine _stateMachine;
+
+    private Vector3 AgentPosition() => agent.transform.position;
 
     private void Awake()
     {
-        //StateMachine
         _stateMachine = new StateMachine();
 
         var idleState = new IdleState(this, animator);
-        var moveState = new MoveState(this, animator);
         var attackState = new AttackState(this, animator);
+        var chaseState = new ChaseState(this, animator);
+        var dieState = new DieState(this, animator);
 
-        At(idleState, moveState, new FuncPredicate(() => _canMove));
-        At(moveState, idleState, new FuncPredicate(() => !_canMove));
+        _stateMachine.At(idleState, attackState, new FuncPredicate(() => _canAttack));
+        _stateMachine.At(idleState, chaseState, new FuncPredicate(() => _canAttack && !_isPlayerInRange));
 
-        At(idleState, attackState, new FuncPredicate(() => _canAttack));
-        At(attackState, idleState, new FuncPredicate(() => !_canAttack && !_canMove));
+        _stateMachine.At(attackState, chaseState, new FuncPredicate(() => !_isPlayerInRange));
+        _stateMachine.At(chaseState, attackState, new FuncPredicate(() => _isPlayerInRange));
 
-        At(moveState, attackState, new FuncPredicate(() => _canAttack));
-        At(attackState, moveState, new FuncPredicate(() => !_canAttack && _canMove));
+        _stateMachine.At(idleState, dieState, new FuncPredicate(() => _isDead));
+        _stateMachine.At(attackState, dieState, new FuncPredicate(() => _isDead));
 
         _stateMachine.SetState(idleState);
+
+        SetDestination(transform.position);
+
+        if (enemyAttack == null) enemyAttack = GetComponent<EnemyAttack>();
     }
-    private void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);
-    private void Any(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
+
     private void Update()
     {
         _stateMachine.Update();
     }
+
     private void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
     }
-    public void SetTargetMove()
+
+    public void SetSpeed(float speed) => agent.speed = speed;
+    private void SetDestination(Vector3 target) => agent.destination = target;
+    public void MoveWhenIdle()
     {
-        _targetMove = playerTarget != null
-            ? GetPositionToMoveInRange(playerTarget.position, attackRange / 2f, attackRange)
-            : MapPositionHandler.Instance.GetPositionToMove();
+        SetDestination(transform.GetNearRandomPosition(NoAttackMove / 2f, NoAttackMove));
     }
-    public void Move()
+    public void MoveWhenAttack()
     {
-        navMeshAgent.destination = _targetMove;
+        SetDestination(AgentPosition().GetPositionToMoveInRange(CurrentPlayerToAttack.Position, AttackRange));
     }
-    public void SetMove()
+    public bool IsReachTarget() => agent.IsAgentReachTarget();
+    public void SetPlayerToAttack(Player player)
     {
-        _canMove = true;
-    }
-    public void SetStop()
-    { 
-        navMeshAgent.destination = transform.position;
-        _canMove = false;
-    }
-    public bool ReachTarget()
-    {
-        var current = new Vector2(AgentPosition().x, AgentPosition().z);
-        var target = new Vector2(_targetMove.x, _targetMove.z);
-        return Vector2.Distance(current, target) <= Constant.MinCheckReachTarget;
-    }
-    public void SetAttackPlayer(Player player)
-    {
+        CurrentPlayerToAttack = player;
+        _isTrackedPlayer = true;
         _canAttack = true;
-        _canMove = false;
-        navMeshAgent.isStopped = true;
-        playerTarget = player.transform;
     }
-    public void SetOutRangeAttack()
+    public void SetPlayerInRange(bool isInRange) => _isPlayerInRange = isInRange;
+    public bool IsPlayerInRange() => AgentPosition().IsPlayerInRange(CurrentPlayerToAttack.Position, AttackRange);
+    public Player GetPlayerToAttack() => CurrentPlayerToAttack;
+    public bool IsTrackPlayer() => _isTrackedPlayer;
+
+    public void Attack(float delay)
     {
-        navMeshAgent.isStopped = false;
-        _canAttack = false;
+        enemyAttack.Attack(delay);
     }
-    public bool IsTrackPlayer() => playerTarget != null;
 }

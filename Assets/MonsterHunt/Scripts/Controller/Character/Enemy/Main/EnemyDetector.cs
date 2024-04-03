@@ -9,7 +9,7 @@ public class EnemyDetector : MonoBehaviour
     {
         if (other.TryGetComponent<Player>(out var player))
         {
-            enemyController.SetAttackPlayer(player);
+            enemyController.SetPlayerToAttack(player);
         }
     }
 
@@ -20,9 +20,9 @@ public class EnemyDetector : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<Player>(out var player))
+        if (other.GetComponent<Player>())
         {
-            enemyController.SetOutRangeAttack();
+            enemyController.SetPlayerInRange(false);
         }
     }
 }

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087d3c972db349a3bcdf10bf792f001e, type: 3}
+  m_Name: ExampleEnemy
+  m_EditorClassIdentifier: 
+  enemyData:
+    characterData:
+      nameCharacter: Example
+      maxHealth: 500
+      speed: 10
+      jumpForce: 5
+      armor: 2
+    enemyType: 0
+    enemyDrop: 0
+    enemyAttack:
+      attackType: 0
+      damage: 0
+      attackRate: 0
+      lengthToAttack: 0
+    enemy: {fileID: 0}

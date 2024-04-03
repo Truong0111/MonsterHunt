@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = nameof(PlayerDataSO), menuName = "MonsterHunt/PlayerDataSO", order = -1)]
 public class PlayerDataSO : ScriptableObject
 {
-    public List<PlayerData> playerDatas;
+    public PlayerData playerData;
 }
 
 [Serializable]

@@ -24,7 +24,7 @@ MonoBehaviour:
     weaponType: 0
     damage: 10
     attackDistance: 100
-    scaleOnHand: 0.25
+    scaleOnHand: 0.2
     gunData:
       bullet: {fileID: 1549761536973432182, guid: 70ca27a94cc0e0d4aa89e9326d8373ff, type: 3}
       bulletPrefab: {fileID: 1549761536973432181, guid: 70ca27a94cc0e0d4aa89e9326d8373ff, type: 3}
@@ -49,8 +49,8 @@ MonoBehaviour:
     id: 0
     name: Sword
     weaponType: 1
-    damage: 50
-    attackDistance: 1.5
+    damage: 20
+    attackDistance: 2.5
     scaleOnHand: 1
     gunData:
       bullet: {fileID: 0}

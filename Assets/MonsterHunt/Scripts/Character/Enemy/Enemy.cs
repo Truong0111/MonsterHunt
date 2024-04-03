@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy : Character
 {
-    public PrefabSO prefabSo;
     public EnemyDataSO enemyDataSo;
-    public EnemyData currentEnemyData;
+    public EnemyData enemyData;
+    public EnemyController enemyController;
 
     public override void Awake()
     {
@@ -17,18 +18,20 @@ public class Enemy : Character
     public override void OnEnable()
     {
         base.OnEnable();
-        var data = enemyDataSo.enemyDatas.Find(x => x.characterData.id == id);
-        Setup(data);
+        Setup(enemyDataSo.enemyData);
     }
 
-    private void Setup(EnemyData enemyData)
+    private void Setup(EnemyData data)
     {
-        currentCharacterData = enemyData.characterData.Clone();
-        currentEnemyData = enemyData.Clone();
+        currentCharacterData = data.characterData.Clone();
+        enemyData = data.Clone();
         Init(currentCharacterData.speed, currentCharacterData.maxHealth);
+        enemyController.AttackRange = this.enemyData.enemyAttackValue.attackRange;
+        enemyController.NoAttackMove = this.enemyData.enemyAttackValue.attackRange * 2f;
+        enemyController.SetSpeed(this.enemyData.characterData.speed);
     }
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         gameObject.SetActive(false);
@@ -37,20 +40,20 @@ public class Enemy : Character
 
     public void DropObject()
     {
-        if (currentEnemyData.enemyDrop == EnemyDrop.Gold)
+        if (enemyData.enemyDrop == EnemyDrop.Gold)
         {
             
         }
 
-        if (currentEnemyData.enemyDrop == EnemyDrop.Bullet)
+        if (enemyData.enemyDrop == EnemyDrop.Bullet)
         {
         }
 
-        if (currentEnemyData.enemyDrop == EnemyDrop.HealthItem)
+        if (enemyData.enemyDrop == EnemyDrop.HealthItem)
         {
         }
 
-        if (currentEnemyData.enemyDrop == EnemyDrop.Weapon)
+        if (enemyData.enemyDrop == EnemyDrop.Weapon)
         {
         }
     }

@@ -1,22 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
+    private Player _player;
     private PlayerController _playerController;
-
     private PlayerInput _playerInput;
 
     public WeaponDataSO weaponDataSo;
 
     public WeaponData currentWeaponData;
     public Weapon currentWeapon;
-
-    private bool _isInitialized;
-
-    public bool isSword;
+    public Weapon[] weaponsEquipped;
 
     private void Awake()
     {
@@ -26,28 +25,54 @@ public class WeaponController : MonoBehaviour
         _playerInput.Weapon.Fire1Released.performed += e => AttackReleased();
         _playerInput.Weapon.Reload.performed += e => Reload();
 
+        _playerInput.Weapon.Swap.performed += Swap;
+
         _playerInput.Enable();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        weaponsEquipped = new Weapon[3];
+
+        _playerController = GetComponentInParent<PlayerController>();
+        _player = GetComponentInParent<Player>();
     }
 
     private void Start()
     {
-        SetupCurrentWeapon(isSword ? weaponDataSo.sword : weaponDataSo.defaultWeapon);
+        SpawnDefaultWeapon(weaponDataSo.defaultWeapon);
+        SpawnDefaultWeapon(weaponDataSo.sword);
+        SetupCurrentWeapon(0);
     }
 
-    private void SetupCurrentWeapon(WeaponData weaponData)
+    private void SpawnDefaultWeapon(WeaponData weaponData)
     {
-        currentWeaponData = weaponData;
-        currentWeapon = SimplePool.Spawn(currentWeaponData.weapon);
-        currentWeapon.Setup(currentWeaponData);
-        var weaponTransform = currentWeapon.transform;
+        var weapon = SimplePool.Spawn(weaponData.weapon);
+        weapon.Setup(weaponData);
+        var weaponTransform = weapon.transform;
         weaponTransform.SetParent(transform);
         weaponTransform.localPosition = Vector3.zero;
         weaponTransform.localRotation = Quaternion.identity;
-        weaponTransform.localScale = currentWeaponData.scaleOnHand * Vector3.one;
+        weaponTransform.localScale = weapon.currentWeaponData.scaleOnHand * Vector3.one;
+        AddToEquippedWeapon(weapon);
+        weapon.gameObject.SetActive(false);
+    }
 
-        WeaponUI.UpdateBullet.Invoke(currentWeaponData);
+    private void SetupCurrentWeapon(int index)
+    {
+        currentWeapon = weaponsEquipped[index];
+        currentWeapon.gameObject.SetActive(true);
+        _player.CurrentWeapon = currentWeapon;
+        var data = weaponsEquipped[index].currentWeaponData;
+        WeaponUI.UpdateBullet.Invoke(data);
+    }
+
+    private void AddToEquippedWeapon(Weapon weapon)
+    {
+        for (var index = 0; index < weaponsEquipped.Length; index++)
+        {
+            if (weaponsEquipped[index] != null) continue;
+            weaponsEquipped[index] = weapon;
+            return;
+        }
     }
 
     private void AttackPressed()
@@ -68,6 +93,21 @@ public class WeaponController : MonoBehaviour
 
     public virtual void Reload()
     {
-        currentWeapon.Reload();
+        _playerController.Animator.SetTrigger(AnimatorConstant.ReloadHash);
+        _player.CanAttack = false;
+        // currentWeapon.Reload();
+    }
+
+    public virtual void Swap(InputAction.CallbackContext context)
+    {
+        var index = (int)context.ReadValue<float>() - 1;
+        if(weaponsEquipped[index] == null) return;
+        for (var i = 0; i < weaponsEquipped.Length; i++)
+        {
+            if (weaponsEquipped[i] == null) continue;
+            weaponsEquipped[i].gameObject.SetActive(i == index);
+        }
+
+        SetupCurrentWeapon(index);
     }
 }

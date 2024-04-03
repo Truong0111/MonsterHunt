@@ -27,6 +27,7 @@ public class Gun : Weapon
 
     public override void OnAttack()
     {
+        if(!player.CanAttack) return;
         if (!OnAttacking) return;
         if (currentWeaponData.gunData.currentBullet <= 0) return;
         _timeToNextFire -= Time.deltaTime;
@@ -41,6 +42,7 @@ public class Gun : Weapon
     public override void Reload()
     {
         base.Reload();
+        player.CanAttack = false;
         if (currentWeaponData.gunData.isInfinityBullet)
         {
             if (currentWeaponData.gunData.currentBullet == currentWeaponData.gunData.magazine) return;
@@ -71,6 +73,7 @@ public class Gun : Weapon
         if (!Physics.Raycast(Origin(), Direction(), out var hit, AttackDistance(), AttackLayer())) return;
         if (hit.collider.TryGetComponent<Hitbox>(out var hitBox))
         {
+            SpawnFx(hit.point);
             hitBox.GetDamage(currentWeaponData.damage);
         }
     }

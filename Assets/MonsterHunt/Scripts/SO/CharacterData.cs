@@ -3,7 +3,6 @@ using System;
 [Serializable]
 public struct CharacterData
 {
-    public short id;
     public string nameCharacter;
     public float maxHealth;
     public float speed;

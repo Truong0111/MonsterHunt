@@ -13,12 +13,32 @@ public static class NavMeshHelper
 
         return new Vector3(randomX, randomY, randomZ);
     }
-    
-    public static Vector3 GetPositionToMoveInRange(Vector3 target,float minRange, float maxRange)
+
+    public static Vector3 GetPositionToMoveInRange(Vector3 target, float minRange, float maxRange)
     {
         var randomDirection = Random.insideUnitSphere.normalized;
         var randomDistance = Random.Range(minRange, maxRange);
 
         return target + randomDirection * randomDistance;
+    }
+
+    public static Vector3 GetPositionToMoveInRange(this Vector3 agent, Vector3 target, float range)
+    {
+        var direction = (agent - target).normalized;
+        
+        return target + direction * (range * 0.97f);
+    }
+
+    // public static Vector3 GetPositionToAttackTarget(this Transform transform, Vector3 target, float range)
+    // {
+    //     
+    // }
+
+    public static Vector3 GetNearRandomPosition(this Transform trans, float minRange, float maxRange)
+    {
+        var randomDirection = Random.insideUnitSphere.normalized;
+        var randomDistance = Random.Range(minRange, maxRange);
+
+        return trans.position + randomDirection * randomDistance;
     }
 }

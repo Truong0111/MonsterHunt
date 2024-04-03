@@ -14,7 +14,8 @@ public class PlayerController : CharacterMovement
     private Vector3 _newPlayerRotation;
 
     [Header("Ref")] public Transform cameraHolder;
-    public Transform cameraTransform;
+    public Transform rootMotionTransform;
+    public Transform playerCameraTransform;
     public Transform feetTransform;
 
     [Header("Setting")] public PlayerSettingModel playerSettingModel;
@@ -62,7 +63,7 @@ public class PlayerController : CharacterMovement
         
         _playerInput.Enable();
 
-        _newCameraRotation = cameraHolder.localRotation.eulerAngles;
+        // _newCameraRotation = cameraHolder.localRotation.eulerAngles;
         _newPlayerRotation = transform.localRotation.eulerAngles;
 
         _cameraHeight = cameraHolder.localPosition.y;
@@ -75,7 +76,7 @@ public class PlayerController : CharacterMovement
         CalculateView();
         CalculateMove();
         CalculateJump();
-        CalculateStance();
+        // CalculateStance();
     }
 
     private void CalculateView()
@@ -93,7 +94,9 @@ public class PlayerController : CharacterMovement
 
         _newCameraRotation.x = Mathf.Clamp(_newCameraRotation.x, viewClampMin, viewClampMax);
 
-        cameraHolder.localRotation = Quaternion.Euler(_newCameraRotation);
+        // playerCameraTransform.localRotation = Quaternion.Euler(_newCameraRotation / 2f);
+        rootMotionTransform.localRotation = Quaternion.Euler(_newCameraRotation);
+        // handWeapon.localRotation = Quaternion.Euler(_newCameraRotation);
     }
 
     private void CalculateMove()
@@ -155,25 +158,25 @@ public class PlayerController : CharacterMovement
     private void CalculateStance()
     {
         var currentStance = playerStandStance;
-
+        
         if (playerStance == PlayerStance.Crouch)
         {
             currentStance = playerCrouchStance;
         }
-
+        
         var cameraHolderLocalPosition = cameraHolder.localPosition;
         _cameraHeight = Mathf.SmoothDamp(cameraHolderLocalPosition.y, currentStance.cameraHeight,
             ref _cameraHeightVelocity, playerStanceSmoothing);
-
+        
         cameraHolderLocalPosition = new Vector3(
             x: cameraHolderLocalPosition.x,
             y: _cameraHeight,
             z: cameraHolderLocalPosition.z);
         cameraHolder.localPosition = cameraHolderLocalPosition;
-
+        
         _characterController.height = Mathf.SmoothDamp(_characterController.height, currentStance.stanceCollider.height,
             ref _stanceCapsuleHeightVelocity, playerStanceSmoothing);
-
+        
         _characterController.center = Vector3.SmoothDamp(_characterController.center,
             currentStance.stanceCollider.center,
             ref _stanceCapsuleCenterVelocity, playerStanceSmoothing);

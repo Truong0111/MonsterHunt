@@ -9,9 +9,10 @@ public class Character : MonoBehaviour
     public CharacterController characterController;
     public CharacterData currentCharacterData;
 
-    public int id;
-    public float health;
-    public float speed;
+    public float Health { get; set; }
+    public float Speed { get; set; }
+    public Vector3 Position => transform.position;
+    
     public Animator animator;
     public List<Weapon> weapons;
     public CharacterAction characterAction;
@@ -31,47 +32,47 @@ public class Character : MonoBehaviour
 
     public virtual void Init(float speedData, float healthData)
     {
-        speed = speedData;
-        health = healthData;
+        Speed = speedData;
+        Health = healthData;
     }
 
     public Animator Animator => animator;
     public CharacterController CharacterController => characterController;
 
-    public float CurrentHealth => health;
+    public float CurrentHealth => Health;
 
     public bool CanMove() => canMove;
 
-    public void GetDamage(float damage)
+    public virtual void GetDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0) Die();
+        Health -= damage;
+        if (Health <= 0) Die();
     }
 
 
     #region State
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         UpdateState(CharacterAction.Die);
     }
 
-    protected virtual void Attack()
+    public virtual void Attack()
     {
         UpdateState(CharacterAction.Attack);
     }
 
-    protected virtual void Idle()
+    public virtual void Idle()
     {
         UpdateState(CharacterAction.Idle);
     }
 
-    protected virtual void Move()
+    public virtual void Move()
     {
         UpdateState(CharacterAction.Move);
     }
 
-    protected virtual void Victory()
+    public virtual void Victory()
     {
         UpdateState(CharacterAction.Victory);
     }

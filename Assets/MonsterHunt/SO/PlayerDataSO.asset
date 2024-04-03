@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c74831a3534113bcfbdee4c69948b1, type: 3}
   m_Name: PlayerDataSO
   m_EditorClassIdentifier: 
-  playerDatas:
-  - characterData:
-      id: 0
-      nameCharacter: Example Player
+  playerData:
+    characterData:
+      nameCharacter: Scary
       maxHealth: 100
       speed: 10
       jumpForce: 10
-      armor: 2
+      armor: 1

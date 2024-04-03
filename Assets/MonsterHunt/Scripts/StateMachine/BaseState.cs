@@ -6,9 +6,8 @@ public abstract class BaseState : IState
     protected readonly PlayerController PlayerController;
     protected readonly Animator Animator;
     
-    // protected static readonly int LocomotionHash = Animator.StringToHash("Locomotion");
-    // protected static readonly int JumpHash = Animator.StringToHash("Jump");
-
+    protected bool CanMove;
+    
     protected BaseState(PlayerController playerController, Animator animator)
     {
         PlayerController = playerController;

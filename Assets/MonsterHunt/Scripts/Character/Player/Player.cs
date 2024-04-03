@@ -5,36 +5,49 @@ using UnityEngine;
 public class Player : Character
 {
     public PlayerDataSO playerDataSo;
-
+    public PlayerData playerData;
     public Camera playerCamera;
     public Transform cameraTransform;
-    
+
     public PlayerData currentPlayerData;
     public Weapon CurrentWeapon { get; set; }
+
+    public bool CanAttack { get; set; } = true;
 
     public override void OnEnable()
     {
         base.OnEnable();
-        var data = playerDataSo.playerDatas.Find(x => x.characterData.id == id);
-        Setup(data);
+        Setup(playerDataSo.playerData);
     }
 
-    public void Setup(PlayerData playerData)
+    public void Setup(PlayerData data)
     {
-        currentCharacterData = playerData.characterData.Clone();
-        currentPlayerData = playerData.Clone();
+        currentCharacterData = data.characterData.Clone();
+        currentPlayerData = data.Clone();
         Init(currentCharacterData.speed, currentCharacterData.maxHealth);
+    }
+
+    public override void GetDamage(float damage)
+    {
+        Health -= damage;
+        CallUpdatePlayerInfo();
+        if (Health <= 0) Die();
+    }
+
+    private void CallUpdatePlayerInfo()
+    {
+        PlayerInfoUI.UpdateHealthBar.Invoke(Health / currentCharacterData.maxHealth);
     }
 
     public void Sprint()
     {
-        speed = currentPlayerData.sprintSpeed;
+        Speed = currentPlayerData.sprintSpeed;
         UpdateState(CharacterAction.Sprint);
     }
 
     public void Crouch()
     {
-        speed = currentPlayerData.crouchSpeed;
+        Speed = currentPlayerData.crouchSpeed;
         UpdateState(CharacterAction.Crouch);
     }
 }

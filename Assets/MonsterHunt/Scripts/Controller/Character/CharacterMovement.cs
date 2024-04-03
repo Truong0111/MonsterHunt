@@ -9,7 +9,7 @@ public class CharacterMovement : MonoBehaviour
     protected CharacterController CharacterController => character.CharacterController;
     public Animator Animator => character.Animator;
     
-    protected float Speed => character.speed;
+    protected float Speed => character.Speed;
     protected float JumpForce => character.currentCharacterData.jumpForce;
 
     #region MonoBehaviour

@@ -6,26 +6,31 @@ public class IdleState : BaseState
         : base(enemyController, animator)
     {
     }
-    
-    private float _timeWaitToNextMove;
-    
+
+    private const float TimeToNextMove = 4f;
+    private float _timeToNextMove;
+    private bool _isMoving;
+
     public override void OnEnter()
     {
         base.OnEnter();
-        if (EnemyController.IsTrackPlayer())
-        {
-            _timeWaitToNextMove = 0;
-        }
+        _timeToNextMove = 0f;
     }
 
     public override void Update()
     {
         base.Update();
-        _timeWaitToNextMove -= Time.deltaTime;
-        if (_timeWaitToNextMove < 0)
+        Animator.SetBool(AnimatorConstant.IsMoveHash, _isMoving);
+        if(!EnemyController.IsReachTarget()) return;
+        _timeToNextMove -= Time.deltaTime;
+        if (_timeToNextMove > 0)
         {
-            EnemyController.SetMove();
+            _isMoving = false;
+            return;
         }
+        _timeToNextMove = TimeToNextMove;
+        EnemyController.MoveWhenIdle();
+        _isMoving = true;
     }
 
     public override void FixedUpdate()
@@ -36,6 +41,5 @@ public class IdleState : BaseState
     public override void OnExit()
     {
         base.OnExit();
-        _timeWaitToNextMove = Constant.TimeWaitToNextMove;
     }
 }
