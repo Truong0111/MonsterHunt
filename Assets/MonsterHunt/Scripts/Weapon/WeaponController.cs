@@ -93,9 +93,12 @@ public class WeaponController : MonoBehaviour
 
     public virtual void Reload()
     {
+        if(!_player.CanReload) return;
+        if(!_player.CurrentWeapon.CanReload) return;
+        if(_player.CurrentWeapon.IsReloading) return;
+        _player.CurrentWeapon.IsReloading = true;
         _playerController.Animator.SetTrigger(AnimatorConstant.ReloadHash);
         _player.CanAttack = false;
-        // currentWeapon.Reload();
     }
 
     public virtual void Swap(InputAction.CallbackContext context)

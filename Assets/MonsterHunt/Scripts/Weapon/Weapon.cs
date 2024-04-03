@@ -9,6 +9,13 @@ public class Weapon : MonoBehaviour
 
     public ParticleSystem fxHit;
 
+    public bool CanReload => 
+        currentWeaponData.gunData.bullet != null 
+        && currentWeaponData.gunData.remainBullet != 0 
+        && currentWeaponData.gunData.currentBullet != currentWeaponData.gunData.magazine;
+
+    public bool IsReloading { get; set; }
+    
     public Vector3 Origin() => player.cameraTransform.position;
     public Vector3 Direction() => player.cameraTransform.forward;
     public float AttackDistance() => currentWeaponData.attackDistance;
@@ -43,7 +50,6 @@ public class Weapon : MonoBehaviour
 
     public virtual void OnAttack()
     {
-        
     }
 
     public virtual void StopAttack()

@@ -13,6 +13,7 @@ public class Player : Character
     public Weapon CurrentWeapon { get; set; }
 
     public bool CanAttack { get; set; } = true;
+    public bool CanReload => CurrentWeapon.CanReload;
 
     public override void OnEnable()
     {

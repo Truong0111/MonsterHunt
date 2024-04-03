@@ -15,28 +15,29 @@ public class SuicideAttack : EnemyAttack
 
     private void OnDisable()
     {
+        CheckExplosion();
         SimplePool.Spawn(suicideEffect, transform.position, Quaternion.identity);
     }
 
     public override void Attack(float delay)
     {
         if (_isSuicided) return;
-        _hits = new RaycastHit[10];
         _isSuicided = true;
+        DOVirtual.DelayedCall(delay, () => gameObject.SetActive(false));
+    }
 
-        DOVirtual.DelayedCall(delay, () =>
+    private void CheckExplosion()
+    {
+        _hits = new RaycastHit[10];
+        var hitCount = Physics.SphereCastNonAlloc(Origin(),
+            Radius(), Direction(), _hits, Radius(), attackMask);
+
+        for (var i = 0; i < hitCount; i++)
         {
-            var hitCount = Physics.SphereCastNonAlloc(Origin(),
-                Radius(), Direction(), _hits, Radius(), attackMask);
-
-            for (var i = 0; i < hitCount; i++)
+            if (_hits[i].collider.TryGetComponent<Player>(out var player))
             {
-                Debug.Log(_hits[i].collider.name);
-                if (_hits[i].collider.TryGetComponent<Player>(out var player))
-                {
-                    player.GetDamage(EnemyData().enemyAttackValue.damage);
-                }
+                player.GetDamage(EnemyData().enemyAttackValue.damage);
             }
-        }).OnComplete(() => gameObject.SetActive(false));
+        }
     }
 }

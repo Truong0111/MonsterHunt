@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using static Model;
 
@@ -25,7 +26,7 @@ public class PlayerController : CharacterMovement
 
     [Header("Gravity")] public float gravityAmount;
     public float gravityMin;
-    private float _playerGravity;
+    [ShowInInspector]private float _playerGravity;
 
     [Header("Jump")] public Vector3 jumpForce;
     private Vector3 _jumpForceVelocity;
@@ -52,6 +53,8 @@ public class PlayerController : CharacterMovement
 
     public override void Awake()
     {
+        Application.targetFrameRate = 60;
+        
         _playerInput = new PlayerInput();
 
         _playerInput.CharacterControl.Move.performed += e => inputMovement = e.ReadValue<Vector2>();

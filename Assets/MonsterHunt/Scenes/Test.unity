@@ -2696,7 +2696,7 @@ MonoBehaviour:
     walkingStrafeSpeed: 8
     runningForwardSpeed: 15
     runningStrafeSpeed: 13
-    jumpHeight: 10
+    jumpHeight: 15
     jumpFalloff: 0.5
     speedEffector: 1
     crouchSpeedEffector: 0
@@ -2705,8 +2705,8 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
-  gravityAmount: 0.1
-  gravityMin: -0.1
+  gravityAmount: 0.5
+  gravityMin: -0.2
   jumpForce: {x: 0, y: 0, z: 0}
   playerStance: 0
   playerStanceSmoothing: 0
@@ -2964,26 +2964,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3116556221575866900, guid: bfe66ec8043c4584888add392204c5e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116556221996990413, guid: bfe66ec8043c4584888add392204c5e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116556222214193289, guid: bfe66ec8043c4584888add392204c5e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116556222753627014, guid: bfe66ec8043c4584888add392204c5e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116556222995891254, guid: bfe66ec8043c4584888add392204c5e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.18366373
-      objectReference: {fileID: 0}
     - target: {fileID: 3227535166917981782, guid: bfe66ec8043c4584888add392204c5e6, type: 3}
       propertyPath: m_Name
       value: Map

@@ -5,7 +5,7 @@ public class Gun : Weapon
 {
     public ParticleSystem effectShoot;
     public Transform bulletSpawn;
-
+    
     public override void Setup(WeaponData weaponData)
     {
         base.Setup(weaponData);
@@ -59,6 +59,7 @@ public class Gun : Weapon
             currentWeaponData.gunData.remainBullet -= bulletReloaded;
         }
         CallUpdateBulletCountText();
+        IsReloading = false;
     }
 
     private void CallUpdateBulletCountText()
