@@ -19,7 +19,7 @@ public class Melee : Weapon
     public override void StartAttack()
     {
         base.StartAttack();
-        player.UpdateState(CharacterAction.Attack);
+        // player.UpdateState(CharacterAction.Attack);
         _timeToNextAttack = 0;
     }
 
@@ -35,7 +35,7 @@ public class Melee : Weapon
 
     public override void StopAttack()
     {
-        player.UpdateState(CharacterAction.Idle);
+        // player.UpdateState(CharacterAction.Idle);
     }
     
     private void Attack()

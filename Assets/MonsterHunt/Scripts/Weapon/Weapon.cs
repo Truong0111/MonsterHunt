@@ -37,15 +37,18 @@ public class Weapon : MonoBehaviour
     public virtual void StartAttack()
     {
         OnAttacking = true;
+        player.Animator.SetBool(AnimatorConstant.IsAttackingHash, true);
         // player.Animator.SetTrigger(AnimatorConstant.Attack1);
     }
 
     public virtual void OnAttack()
     {
+        
     }
 
     public virtual void StopAttack()
     {
+        player.Animator.SetBool(AnimatorConstant.IsAttackingHash, false);
         OnAttacking = false;
     }
 

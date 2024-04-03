@@ -12,4 +12,5 @@ public class AnimatorConstant
 
     public static readonly int ReloadHash = Animator.StringToHash("Reload");
     public static readonly int CanAttackHash = Animator.StringToHash("CanAttack");
+    public static readonly int IsAttackingHash = Animator.StringToHash("IsAttacking");
 }

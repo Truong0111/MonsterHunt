@@ -21,4 +21,9 @@ public class PlayerAnimation : MonoBehaviour
     {
         player.CanAttack = true;
     }
+
+    public void OnEjectCasing()
+    {
+        player.Attack();
+    }
 }
