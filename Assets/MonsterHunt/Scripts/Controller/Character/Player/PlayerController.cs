@@ -1,10 +1,13 @@
 using System;
 using Sirenix.OdinInspector;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using static Model;
 
 public class PlayerController : CharacterMovement
 {
+    public BoolEvent pauseEvent;
+    
     private CharacterController _characterController;
 
     private PlayerInput _playerInput;
@@ -51,6 +54,8 @@ public class PlayerController : CharacterMovement
     private Vector3 _newMovementSpeed;
     private Vector3 _newMovementSpeedVelocity;
 
+    private bool _isPause;
+    
     public override void Awake()
     {
         Application.targetFrameRate = 60;
@@ -72,16 +77,34 @@ public class PlayerController : CharacterMovement
         _cameraHeight = cameraHolder.localPosition.y;
 
         _characterController = GetComponent<CharacterController>();
+        
+        pauseEvent.Register(Pause);
+    }
+
+    private void OnDestroy()
+    {
+        pauseEvent.Unregister(Pause);
     }
 
     public override void Update()
     {
+        if(_isPause) return;
         CalculateView();
         CalculateMove();
         CalculateJump();
         // CalculateStance();
     }
 
+    private void Pause(bool isPause)
+    {
+        _isPause = isPause;
+        if (isPause)
+        {
+            _characterController.Move(Vector3.zero);
+        }
+        
+    }
+    
     private void CalculateView()
     {
         _newPlayerRotation.y +=

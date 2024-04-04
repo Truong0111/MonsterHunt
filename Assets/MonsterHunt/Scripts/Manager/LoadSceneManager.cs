@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Sequences;
-using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,7 +14,7 @@ using UnityEditor;
 public class LoadSceneManager : Singleton<LoadSceneManager>
 {
     private AsyncOperation _loadSceneOperation;
-    private AsyncOperation _unLoadSceneOperation;
+    private AsyncOperation _unloadSceneOperation;
 
     [TableList] public List<SceneData> sceneDatas;
 
@@ -63,17 +62,28 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
         return sceneDatas.Find(x => x.name == sceneName);
     }
 
-    public void LoadScene(int id)
+    public void Load(int id)
     {
-        var sceneData = GetSceneData(id);
+        // var sceneData = GetSceneData(id);
+        StartCoroutine(LoadScene(false, id));
     }
 
-    public void LoadScene(string sceneName)
+    public void Load(string sceneName)
     {
         var sceneData = GetSceneData(sceneName);
     }
 
-    public IEnumerator LoadScene(bool isRemoveCurrentScene, int id = -1, string sceneName = null)
+    public void Unload(int id)
+    {
+        StartCoroutine(UnloadScene(id));
+    }
+    
+    public void Unload(string sceneName)
+    {
+        StartCoroutine(UnloadScene(sceneName: sceneName));
+    }
+
+    private IEnumerator LoadScene(bool isRemoveCurrentScene, int id = -1, string sceneName = null)
     {
         if (id == -1 && sceneName == null)
         {
@@ -87,13 +97,10 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
             {
                 var sceneToRemove = SceneManager.GetSceneAt(i);
                 if (sceneToRemove.buildIndex == 1 || sceneToRemove.name == "MasterScene") continue;
-                _unLoadSceneOperation =
+                _unloadSceneOperation =
                     SceneManager.UnloadSceneAsync(sceneToRemove, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 
-                while (!_unLoadSceneOperation.isDone)
-                {
-                    yield return null;
-                }
+                while (!_unloadSceneOperation.isDone) yield return null;
             }
         }
 
@@ -106,12 +113,31 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
             _loadSceneOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
 
-        while (!_loadSceneOperation.isDone)
+        while (!_loadSceneOperation.isDone) yield return null;
+    }
+
+    private IEnumerator UnloadScene(int id = -1, string sceneName = null)
+    {
+        if(SceneManager.sceneCount <= 1) yield break;
+        
+        if (id == -1 && sceneName == null)
         {
-            yield return null;
+            Debug.LogError("No scene find to unload");
+            yield break;
         }
 
-        yield return null;
+        if (id != -1)
+        {
+            
+            _unloadSceneOperation = SceneManager.UnloadSceneAsync(id, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+        }
+        else if (sceneName != null)
+        {
+            _unloadSceneOperation =
+                SceneManager.UnloadSceneAsync(sceneName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+        }
+
+        while (!_loadSceneOperation.isDone) yield return null;
     }
 }
 
@@ -120,7 +146,7 @@ public class SceneData
 {
     public SceneReference sceneRef;
 
-    [DisableInEditorMode] [DisableInPlayMode] 
+    [DisableInEditorMode] [DisableInPlayMode]
     public int index;
 
     [HideInInspector] [DisableInEditorMode] [DisableInPlayMode] [HideInTables]

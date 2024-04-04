@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SuicideAttack : EnemyAttack
 {
@@ -16,7 +17,8 @@ public class SuicideAttack : EnemyAttack
     private void OnDisable()
     {
         CheckExplosion();
-        SimplePool.Spawn(suicideEffect, transform.position, Quaternion.identity);
+        var fx = SimplePool.Spawn(suicideEffect, transform.position, Quaternion.identity);
+        SceneManager.MoveGameObjectToScene(fx.gameObject, SceneManager.GetSceneAt(1));
     }
 
     public override void Attack(float delay)
