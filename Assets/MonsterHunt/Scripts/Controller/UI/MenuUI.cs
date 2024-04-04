@@ -26,11 +26,10 @@ public class MenuUI : MonoBehaviour
     public void LoadLevel()
     {
         LoadSceneManager.Instance.Load(1);
-        gameObject.SetActive(false);
-
         foreach (var ui in showUIs)
         {
             ui.SetActive(true);
         }
+        gameObject.SetActive(false);
     }
 }
