@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,10 +21,7 @@ public class PlayerInfoUI : MonoBehaviour
 
     private void UpdatePlayerHeathBar(float percent)
     {
-        if (_tween is { active: true })
-        {
-            _tween.Kill(true);
-        }
+        _tween?.Kill(true);
         _tween = heathBar.DOFillAmount(percent, 0.1f);
     }
 }

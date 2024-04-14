@@ -8,7 +8,8 @@ public struct EnemyAttackValue
     public float attackRange;
     public float attackDistance;
     public float attackRate;
-    public float lengthToAttack;
+    public float attackDetect;
+    public float speedBullet;
 }
 
 [Serializable]

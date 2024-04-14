@@ -76,6 +76,7 @@ public class EnemyController : MonoBehaviour
         CurrentPlayerToAttack = player;
         _isTrackedPlayer = true;
         _canAttack = true;
+        enemyAttack.player = player;
     }
     public void SetPlayerInRange(bool isInRange) => _isPlayerInRange = isInRange;
     public bool IsPlayerInRange() => AgentPosition().IsPlayerInRange(CurrentPlayerToAttack.Position, AttackRange);

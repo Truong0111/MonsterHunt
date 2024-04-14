@@ -5,11 +5,12 @@ using UnityEngine;
 public class Player : Character
 {
     public PlayerDataSO playerDataSo;
-    public PlayerData playerData;
     public Camera playerCamera;
     public Transform cameraTransform;
 
     public PlayerData currentPlayerData;
+
+    public Transform enemyRangeAttackPoint;
     public Weapon CurrentWeapon { get; set; }
 
     public bool CanAttack { get; set; } = true;
@@ -26,6 +27,7 @@ public class Player : Character
         currentCharacterData = data.characterData.Clone();
         currentPlayerData = data.Clone();
         Init(currentCharacterData.speed, currentCharacterData.maxHealth);
+        CallUpdatePlayerInfo();
     }
 
     public override void GetDamage(float damage)

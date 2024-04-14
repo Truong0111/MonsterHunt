@@ -10,6 +10,9 @@ public class Enemy : Character
     public EnemyData enemyData;
     public EnemyController enemyController;
 
+    public EnemyDetector enemyDetector;
+    public SphereCollider rangeSphere;
+    
     public override void Awake()
     {
         base.Awake();
@@ -29,6 +32,9 @@ public class Enemy : Character
         enemyController.AttackRange = this.enemyData.enemyAttackValue.attackRange;
         enemyController.NoAttackMove = this.enemyData.enemyAttackValue.attackRange * 2f;
         enemyController.SetSpeed(this.enemyData.characterData.speed);
+
+        enemyDetector.SetRange(enemyData.enemyAttackValue.attackDetect);
+        rangeSphere.radius = enemyData.enemyAttackValue.attackRange;
     }
 
     public override void Die()

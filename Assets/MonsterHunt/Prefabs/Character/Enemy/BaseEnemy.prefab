@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fea11e2290b4891a6d0619b1a43b09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereCollider: {fileID: 718514429870174859}
   enemyController: {fileID: 718514430590976110}
 --- !u!1 &718514429956622947
 GameObject:
@@ -270,8 +271,8 @@ GameObject:
   - component: {fileID: 718514430590976104}
   - component: {fileID: 718514430590976105}
   - component: {fileID: 718514430590976110}
-  - component: {fileID: 718514430590976111}
   - component: {fileID: 7662037668834143307}
+  - component: {fileID: 718514430590976111}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -336,9 +337,11 @@ MonoBehaviour:
       attackRange: 0
       attackDistance: 0
       attackRate: 0
-      lengthToAttack: 0
+      attackDetect: 0
     enemy: {fileID: 0}
   enemyController: {fileID: 718514430590976110}
+  enemyDetector: {fileID: 718514429870174853}
+  rangeSphere: {fileID: 4385272467005338184}
 --- !u!114 &718514430590976110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +357,23 @@ MonoBehaviour:
   enemyAttack: {fileID: 7662037668834143307}
   agent: {fileID: 718514430590976111}
   animator: {fileID: 0}
+--- !u!114 &7662037668834143307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718514430590976107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a1becfa62b45358d47741fb6e4e81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 718514430590976105}
+  player: {fileID: 0}
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!195 &718514430590976111
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -376,22 +396,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7662037668834143307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718514430590976107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79a1becfa62b45358d47741fb6e4e81d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 718514430590976105}
-  attackMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!1 &718514430592015715
 GameObject:
   m_ObjectHideFlags: 0

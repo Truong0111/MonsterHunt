@@ -98,11 +98,7 @@ public class PlayerController : CharacterMovement
     private void Pause(bool isPause)
     {
         _isPause = isPause;
-        if (isPause)
-        {
-            _characterController.Move(Vector3.zero);
-        }
-        
+        _characterController.Move(Vector3.zero);
     }
     
     private void CalculateView()
@@ -120,9 +116,7 @@ public class PlayerController : CharacterMovement
 
         _newCameraRotation.x = Mathf.Clamp(_newCameraRotation.x, viewClampMin, viewClampMax);
 
-        // playerCameraTransform.localRotation = Quaternion.Euler(_newCameraRotation / 2f);
         rootMotionTransform.localRotation = Quaternion.Euler(_newCameraRotation);
-        // handWeapon.localRotation = Quaternion.Euler(_newCameraRotation);
     }
 
     private void CalculateMove()

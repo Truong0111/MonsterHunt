@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5935401775440335792}
+  player: {fileID: 0}
   attackMask:
     serializedVersion: 2
     m_Bits: 1024

@@ -27,5 +27,5 @@ MonoBehaviour:
       attackRange: 2
       attackDistance: 2
       attackRate: 0
-      lengthToAttack: 2
+      attackDetect: 10
     enemy: {fileID: 5935401775440335792, guid: f605c45b7756fa5438efb4f604fae7f6, type: 3}

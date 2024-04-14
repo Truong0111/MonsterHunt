@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +10,7 @@ public class Character : MonoBehaviour
     public CharacterController characterController;
     public CharacterData currentCharacterData;
 
-    public float Health { get; set; }
+    [ShowInInspector] public float Health { get; set; }
     public float Speed { get; set; }
     public Vector3 Position => transform.position;
     
