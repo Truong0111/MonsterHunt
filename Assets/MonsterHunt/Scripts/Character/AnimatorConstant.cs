@@ -4,7 +4,8 @@ public class AnimatorConstant
 {
     public static readonly int IdleHash = Animator.StringToHash("Idle");
     public static readonly int Attack1 = Animator.StringToHash("Attack");
-
+    
+    public static readonly int AttackValueHashed = Animator.StringToHash("AttackValue");
 
     public static readonly int IsMoveHash = Animator.StringToHash("IsMove");
     public static readonly int DamageHash = Animator.StringToHash("Damage");

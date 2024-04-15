@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 public class Player : Character
 {
+    public FloatEvent updateHealthBarEvent;
     public PlayerDataSO playerDataSo;
     public Camera playerCamera;
     public Transform cameraTransform;
@@ -16,6 +18,8 @@ public class Player : Character
     public bool CanAttack { get; set; } = true;
     public bool CanReload => CurrentWeapon.CanReload;
 
+    public float MaxHealth { get; set; }
+    
     public override void OnEnable()
     {
         base.OnEnable();
@@ -27,6 +31,7 @@ public class Player : Character
         currentCharacterData = data.characterData.Clone();
         currentPlayerData = data.Clone();
         Init(currentCharacterData.speed, currentCharacterData.maxHealth);
+        MaxHealth = currentCharacterData.maxHealth;
         CallUpdatePlayerInfo();
     }
 
@@ -39,7 +44,7 @@ public class Player : Character
 
     private void CallUpdatePlayerInfo()
     {
-        PlayerInfoUI.UpdateHealthBar.Invoke(Health / currentCharacterData.maxHealth);
+        updateHealthBarEvent.Raise(Health / MaxHealth);
     }
 
     public void Sprint()

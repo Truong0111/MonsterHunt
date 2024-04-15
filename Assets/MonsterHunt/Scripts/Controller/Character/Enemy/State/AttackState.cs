@@ -18,24 +18,19 @@ public class AttackState : BaseState
     public override void Update()
     {
         base.Update();
-        var animInfo = Animator.GetCurrentAnimatorStateInfo(0);
-        if (!animInfo.IsName("Attack"))
-        {
-            _isAttacking = false;
-        }
         if(_isAttacking) return;
 
         _lengthAttackAnimation -= Time.deltaTime;
         if(_lengthAttackAnimation > 0) return;
+        
         if (!EnemyController.IsPlayerInRange())
         {
             EnemyController.SetPlayerInRange(false);
             return;
         }
-        Animator.SetTrigger(AnimatorConstant.AttackHash);
-        _lengthAttackAnimation = animInfo.length;
-        EnemyController.Attack(_lengthAttackAnimation * 0.96f);
         _isAttacking = true;
+        Animator.SetTrigger(AnimatorConstant.AttackHash);
+        EnemyController.Attack(_lengthAttackAnimation);
     }
 
     public override void FixedUpdate()
@@ -46,5 +41,7 @@ public class AttackState : BaseState
     public override void OnExit()
     {
         base.OnExit();
+        _isAttacking = false;
+        EnemyController.StopAttack();
     }
 }

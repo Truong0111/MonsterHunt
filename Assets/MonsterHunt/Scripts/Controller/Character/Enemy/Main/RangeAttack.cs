@@ -8,6 +8,8 @@ public class RangeAttack : EnemyAttack
     
     public float castTime;
     
+    public bool CanAttack { get; set;}
+    
     public override void Attack(float delay)
     {
         

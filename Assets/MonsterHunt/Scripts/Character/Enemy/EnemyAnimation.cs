@@ -8,7 +8,7 @@ public class EnemyAnimation : MonoBehaviour
     
     public void OnSpawnBullet()
     {
-        if(magicAttack != null)
+        if (magicAttack != null)
             magicAttack.SpawnBullet();
     }
 }

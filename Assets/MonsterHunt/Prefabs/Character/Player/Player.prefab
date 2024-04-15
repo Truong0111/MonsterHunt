@@ -2334,7 +2334,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 65
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2639,6 +2639,7 @@ MonoBehaviour:
   weapons: []
   characterAction: 0
   canMove: 0
+  updateHealthBarEvent: {fileID: 11400000, guid: d3689652612384f4cbe096c50be010fa, type: 2}
   playerDataSo: {fileID: 11400000, guid: 11ad4b758196fe140b6068d5c0e6b622, type: 2}
   playerCamera: {fileID: 8540360020277543404}
   cameraTransform: {fileID: 8540360020277543410}

@@ -6,24 +6,43 @@ public class MagicAttack : RangeAttack
 {
     public MagicBullet projectileMagic;
     public MagicBeam beamMagic;
-
+    
     public enum MagicAttackType
     {
         Projectile,
         Beam,
-        ContinuousBeam,
     }
 
     public MagicAttackType magicAttackType;
 
+    private void Awake()
+    {
+        if (magicAttackType == MagicAttackType.Beam)
+        {
+            enemy.Animator.SetInteger(AnimatorConstant.AttackValueHashed, 1);
+            beamMagic.Damage = enemy.enemyData.enemyAttackValue.damage;
+        }
+    }
+
     public override void Attack(float delay)
     {
         base.Attack(delay);
-        transform.DOLookAt(player.transform.position, 0.2f);
+        CanAttack = true;
+        if (magicAttackType == MagicAttackType.Projectile)
+        {
+            transform.DOLookAt(player.transform.position, 0.2f);
+        }
     }
 
+    public override void StopAttack()
+    {
+        CanAttack = false;
+        beamMagic.gameObject.SetActive(false);
+    }
+    
     public void SpawnBullet()
     {
+        if(!CanAttack) return;
         switch (magicAttackType)
         {
             case MagicAttackType.Projectile:
@@ -31,9 +50,6 @@ public class MagicAttack : RangeAttack
                 break;
             case MagicAttackType.Beam:
                 BeamAttack();
-                break;
-            case MagicAttackType.ContinuousBeam:
-                ContinuousBeamAttack();
                 break;
         }
     }
@@ -51,23 +67,9 @@ public class MagicAttack : RangeAttack
 
     public void BeamAttack()
     {
-        var beam = SimplePool.Spawn(beamMagic);
-        var direction = (player.enemyRangeAttackPoint.position - skillStartTransform.position).normalized;
-        beam.transform.SetPositionAndRotation(skillStartTransform.position, skillStartTransform.rotation);
-        beam.Direction = direction;
-        beam.Damage = enemy.enemyData.enemyAttackValue.damage;
-        beam.Speed = 5f;
-        beam.CanMove = true;
-    }
-
-    public void ContinuousBeamAttack()
-    {
-        var beam = SimplePool.Spawn(beamMagic);
-        var direction = (player.enemyRangeAttackPoint.position - skillStartTransform.position).normalized;
-        beam.transform.SetPositionAndRotation(skillStartTransform.position, skillStartTransform.rotation);
-        beam.Direction = direction;
-        beam.Damage = enemy.enemyData.enemyAttackValue.damage;
-        beam.Speed = 5f;
-        beam.CanMove = true;
+        transform.DOLookAt(player.transform.position, 0.12f);
+        beamMagic.gameObject.SetActive(true);
+        beamMagic.SetRange(enemy.enemyData.enemyAttackValue.attackRange);
+        beamMagic.transform.LookAt(player.enemyRangeAttackPoint);
     }
 }

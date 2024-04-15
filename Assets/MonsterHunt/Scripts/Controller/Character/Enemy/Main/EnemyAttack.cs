@@ -12,4 +12,9 @@ public class EnemyAttack : MonoBehaviour
     public virtual void Attack(float delay)
     {
     }
+
+    public virtual void StopAttack()
+    {
+        
+    }
 }

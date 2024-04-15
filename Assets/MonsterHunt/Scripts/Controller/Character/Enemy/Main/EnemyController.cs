@@ -61,16 +61,21 @@ public class EnemyController : MonoBehaviour
     }
 
     public void SetSpeed(float speed) => agent.speed = speed;
+    
     private void SetDestination(Vector3 target) => agent.destination = target;
+    
     public void MoveWhenIdle()
     {
         SetDestination(transform.GetNearRandomPosition(NoAttackMove / 2f, NoAttackMove));
     }
+    
     public void MoveWhenAttack()
     {
         SetDestination(AgentPosition().GetPositionToMoveInRange(CurrentPlayerToAttack.Position, AttackRange));
     }
+    
     public bool IsReachTarget() => agent.IsAgentReachTarget();
+    
     public void SetPlayerToAttack(Player player)
     {
         CurrentPlayerToAttack = player;
@@ -78,13 +83,22 @@ public class EnemyController : MonoBehaviour
         _canAttack = true;
         enemyAttack.player = player;
     }
+    
     public void SetPlayerInRange(bool isInRange) => _isPlayerInRange = isInRange;
+    
     public bool IsPlayerInRange() => AgentPosition().IsPlayerInRange(CurrentPlayerToAttack.Position, AttackRange);
+    
     public Player GetPlayerToAttack() => CurrentPlayerToAttack;
+    
     public bool IsTrackPlayer() => _isTrackedPlayer;
 
     public void Attack(float delay)
     {
         enemyAttack.Attack(delay);
+    }
+
+    public void StopAttack()
+    {
+        enemyAttack.StopAttack();
     }
 }
