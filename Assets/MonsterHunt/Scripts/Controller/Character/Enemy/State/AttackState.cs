@@ -18,18 +18,17 @@ public class AttackState : BaseState
     public override void Update()
     {
         base.Update();
-        if(_isAttacking) return;
-
+        
         _lengthAttackAnimation -= Time.deltaTime;
         if(_lengthAttackAnimation > 0) return;
-        
         if (!EnemyController.IsPlayerInRange())
         {
             EnemyController.SetPlayerInRange(false);
             return;
         }
-        _isAttacking = true;
         Animator.SetTrigger(AnimatorConstant.AttackHash);
+        // Animator.SetBool(AnimatorConstant.IsAttackingHash, true);
+        _lengthAttackAnimation = Animator.GetCurrentAnimatorStateInfo(0).length;
         EnemyController.Attack(_lengthAttackAnimation);
     }
 

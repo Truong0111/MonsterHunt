@@ -12,6 +12,8 @@ public class Enemy : Character
 
     public EnemyDetector enemyDetector;
     public SphereCollider rangeSphere;
+
+    public EnemyWeapon enemyWeapon;
     
     public override void Awake()
     {

@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 4154279050601919520}
   - component: {fileID: 4154279050601919523}
   - component: {fileID: 4154279050601919549}
-  - component: {fileID: 1712752788}
   m_Layer: 0
   m_Name: ProjectileWizard
   m_TagString: Untagged
@@ -197,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a4aa616eab8fb409ff44f6e4e01c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 1712752788}
+  characterController: {fileID: 0}
   currentCharacterData:
     nameCharacter: 
     maxHealth: 0
@@ -290,24 +289,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!143 &1712752788
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4154279050601919551}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4154279050716317831
 GameObject:
   m_ObjectHideFlags: 0
