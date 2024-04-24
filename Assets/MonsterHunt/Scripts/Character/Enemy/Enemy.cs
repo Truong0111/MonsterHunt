@@ -13,7 +13,7 @@ public class Enemy : Character
     public EnemyDetector enemyDetector;
     public SphereCollider rangeSphere;
 
-    public EnemyWeapon enemyWeapon;
+    public EnemyWeapon[] enemyWeapons;
     
     public override void Awake()
     {
@@ -42,7 +42,7 @@ public class Enemy : Character
     public override void Die()
     {
         base.Die();
-        gameObject.SetActive(false);
+        enemyController.SetDead();
         DropObject();
     }
 

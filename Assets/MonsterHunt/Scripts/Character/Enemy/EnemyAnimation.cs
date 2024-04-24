@@ -5,34 +5,53 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     public Animator animator;
+
+    public Enemy enemy;
     
-    public MagicAttack magicAttack;
-    public MeleeWeapon meleeWeapon;
+    public MagicAttack[] magicAttacks;
+    public MeleeWeapon[] meleeWeapons;
     
     public void OnSpawnBullet()
     {
-        if (magicAttack != null)
-            magicAttack.SpawnBullet();
+        foreach (var magicAttack in magicAttacks)
+        {
+            if (magicAttack != null)
+                magicAttack.SpawnBullet();
+        }
     }
 
     public void OnAttackCall()
     {
-        if (meleeWeapon != null)
+        foreach (var meleeWeapon in meleeWeapons)
         {
-            meleeWeapon.CanDamage = true;
+            if (meleeWeapon != null)
+            {
+                meleeWeapon.CanDamage = true;
+            }
         }
     }
 
     public void OnAttackStop()
     {
-        if (meleeWeapon != null)
+        foreach (var magicAttack in magicAttacks)
         {
-            meleeWeapon.CanDamage = false;
+            if (magicAttack != null)
+            {
+                magicAttack.StopAttack();
+            }
         }
+        
+        foreach (var meleeWeapon in meleeWeapons)
+        {
+            if (meleeWeapon != null)
+            {
+                meleeWeapon.CanDamage = false;
+            }
+        }
+    }
 
-        if (magicAttack != null)
-        {
-            magicAttack.StopAttack();
-        }
+    public void OnEndDie()
+    {
+        enemy.gameObject.SetActive(false);
     }
 }

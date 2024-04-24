@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.252
       objectReference: {fileID: 0}
+    - target: {fileID: 718514430592015715, guid: 87f166b0aaeb68c47b0df578464b1de1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 718514430592015719, guid: 87f166b0aaeb68c47b0df578464b1de1, type: 3}
       propertyPath: m_Radius
       value: 0.3
@@ -184,6 +188,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61176fce37064999865aeb43cb40d4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5935401775879723450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 718514429956622947, guid: 87f166b0aaeb68c47b0df578464b1de1, type: 3}
+  m_PrefabInstance: {fileID: 6604077396121752537}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8650179746447845132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5935401775879723450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fee58c3fae4ef0bc154ec3e334b795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1001 &8282369270360636232
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -29,4 +29,4 @@ MonoBehaviour:
       attackRate: 2
       attackDetect: 12
       speedBullet: 10
-    enemy: {fileID: 4154279050601919521, guid: ded30bf621a76ca4c9802305f4868fad, type: 3}
+    enemy: {fileID: 7366790224968598406, guid: f8e42c670d9013149805d3250adf51b2, type: 3}

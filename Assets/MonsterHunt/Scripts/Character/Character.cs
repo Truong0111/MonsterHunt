@@ -49,12 +49,12 @@ public class Character : MonoBehaviour
         Health -= damage;
         if (Health <= 0) Die();
     }
-
-
+    
     #region State
 
     public virtual void Die()
     {
+        if(characterAction == CharacterAction.Die) return;
         UpdateState(CharacterAction.Die);
     }
 

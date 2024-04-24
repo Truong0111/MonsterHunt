@@ -42,6 +42,7 @@ public class EnemyController : MonoBehaviour
 
         _stateMachine.At(idleState, dieState, new FuncPredicate(() => _isDead));
         _stateMachine.At(attackState, dieState, new FuncPredicate(() => _isDead));
+        _stateMachine.At(chaseState, dieState, new FuncPredicate(() => _isDead));
 
         _stateMachine.SetState(idleState);
 
@@ -60,6 +61,11 @@ public class EnemyController : MonoBehaviour
         _stateMachine.FixedUpdate();
     }
 
+    public void SetDead()
+    {
+        _isDead = true;
+        agent.isStopped = true;
+    }
     public void SetSpeed(float speed) => agent.speed = speed;
     
     private void SetDestination(Vector3 target) => agent.destination = target;

@@ -11,6 +11,7 @@ public class DieState : BaseState
     public override void OnEnter()
     {
         base.OnEnter();
+        Animator.SetTrigger(AnimatorConstant.DieHashed);
     }
 
     public override void Update()
