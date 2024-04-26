@@ -101,10 +101,12 @@ public class EnemyController : MonoBehaviour
     public void Attack(float delay)
     {
         enemyAttack.Attack(delay);
+        agent.isStopped = true;
     }
 
     public void StopAttack()
     {
         enemyAttack.StopAttack();
+        agent.isStopped = false;
     }
 }

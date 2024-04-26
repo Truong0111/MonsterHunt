@@ -12,4 +12,17 @@ public class Magnet : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == maskRaycast)
+        {
+            Collect();
+        }
+    }
+
+    private void Collect()
+    {
+        //TODO: Collect object
+    }
 }
