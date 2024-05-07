@@ -18,6 +18,7 @@ public class Enemy : Character
     public override void Awake()
     {
         base.Awake();
+        
     }
 
     public override void OnEnable()
@@ -28,12 +29,12 @@ public class Enemy : Character
 
     private void Setup(EnemyData data)
     {
-        currentCharacterData = data.characterData.Clone();
+        currentCharacterData = data.enemyData.Clone();
         enemyData = data.Clone();
         Init(currentCharacterData.speed, currentCharacterData.maxHealth);
         enemyController.AttackRange = this.enemyData.enemyAttackValue.attackRange;
         enemyController.NoAttackMove = this.enemyData.enemyAttackValue.attackRange * 2f;
-        enemyController.SetSpeed(this.enemyData.characterData.speed);
+        enemyController.SetSpeed(this.enemyData.enemyData.speed);
 
         enemyDetector.SetRange(enemyData.enemyAttackValue.attackDetect);
         rangeSphere.radius = enemyData.enemyAttackValue.attackRange;

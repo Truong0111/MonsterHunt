@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    public Enemy enemy;
     public EnemyAttack enemyAttack;
     public NavMeshAgent agent;
     public Animator animator;
@@ -49,6 +50,7 @@ public class EnemyController : MonoBehaviour
         SetDestination(transform.position);
 
         if (enemyAttack == null) enemyAttack = GetComponent<EnemyAttack>();
+        if (enemy == null) enemy = GetComponent<Enemy>();
     }
 
     private void Update()

@@ -18,6 +18,8 @@ public class PauseUI : MonoBehaviour
 
     private bool _isPause;
     
+    public static bool IsInGame;
+    
     public List<GameObject> showUIs;
     private void Awake()
     {
@@ -35,16 +37,19 @@ public class PauseUI : MonoBehaviour
 
     private void OnEnable()
     {
-        // Time.timeScale = 0f;
+        Time.timeScale = 0f;
+        _isPause = true;
     }
 
     private void OnDisable()
     {
-        // Time.timeScale = 1f;
+        Time.timeScale = 1f;
+        _isPause = false;
     }
 
     private void OnPress()
     {
+        if(!IsInGame) return;
         if(_isPause) Resume();
         else Pause();
     }
@@ -59,7 +64,6 @@ public class PauseUI : MonoBehaviour
             ui.SetActive(false);
         }
         gameObject.SetActive(true);
-        _isPause = true;
     }
     
     private void Resume()
@@ -72,14 +76,14 @@ public class PauseUI : MonoBehaviour
             ui.SetActive(true);
         }
         gameObject.SetActive(false);
-        _isPause = false;
     }
     
     private void UnloadLevel()
     {
         pauseEvent.Raise(false);
         menu.SetActive(true);
-        LoadSceneManager.Instance.Unload(1);
+        LoadSceneManager.Instance.Unload(Pref.LevelPref.Level + 2);
+        Pref.LevelPref.Level = 0;
         gameObject.SetActive(false);
     }
 }

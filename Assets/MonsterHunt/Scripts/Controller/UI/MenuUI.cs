@@ -24,17 +24,21 @@ public class MenuUI : MonoBehaviour
         {
             ui.SetActive(false);
         }
+        
+        PauseUI.IsInGame = false;
     }
 
     public void LoadLevel()
     {
-        LoadSceneManager.Instance.Load(1);
+        GameManager.Instance.LoadLevel();
+        
         foreach (var ui in showUIs)
         {
             ui.SetActive(true);
         }
 
         gameObject.SetActive(false);
+        PauseUI.IsInGame = true;
     }
 
     public void Quit()

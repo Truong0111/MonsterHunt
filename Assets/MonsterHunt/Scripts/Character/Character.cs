@@ -14,21 +14,31 @@ public class Character : MonoBehaviour
     public float Speed { get; set; }
     public Vector3 Position => transform.position;
     
-    public Animator animator;
+    private Animator _animator;
     public List<Weapon> weapons;
     public CharacterAction characterAction;
 
+    public event Action CharacterDie; 
+    
     public bool canMove;
 
     public virtual void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         characterController = GetComponent<CharacterController>();
+
+        
     }
 
     public virtual void OnEnable()
     {
         characterAction = CharacterAction.Idle;
+        CharacterDie += OnCharacterDie;
+    }
+
+    private void OnDisable()
+    {
+        CharacterDie -= OnCharacterDie;
     }
 
     public virtual void Init(float speedData, float healthData)
@@ -37,7 +47,7 @@ public class Character : MonoBehaviour
         Health = healthData;
     }
 
-    public Animator Animator => animator;
+    public Animator Animator => _animator;
     public CharacterController CharacterController => characterController;
 
     public float CurrentHealth => Health;
@@ -48,6 +58,11 @@ public class Character : MonoBehaviour
     {
         Health -= damage;
         if (Health <= 0) Die();
+    }
+
+    public virtual void OnCharacterDie()
+    {
+        
     }
     
     #region State

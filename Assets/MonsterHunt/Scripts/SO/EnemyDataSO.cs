@@ -13,7 +13,7 @@ public class EnemyDataSO : ScriptableObject
 [Serializable]
 public struct EnemyData
 {
-    public CharacterData characterData;
+    public CharacterData enemyData;
     public EnemyType enemyType;
     public EnemyDrop enemyDrop;
     public EnemyAttackValue enemyAttackValue;

@@ -2665,6 +2665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 8540360021488942190}
   pauseEvent: {fileID: 11400000, guid: 4b62b3a555c81d240a2957e96e8c8b33, type: 2}
+  characterController: {fileID: 8540360021488942194}
   inputMovement: {x: 0, y: 0}
   inputView: {x: 0, y: 0}
   cameraHolder: {fileID: 8540360021615862079}

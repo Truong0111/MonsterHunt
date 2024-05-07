@@ -2,12 +2,13 @@ using System;
 using Sirenix.OdinInspector;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static Model;
 
 public class PlayerController : CharacterMovement
 {
     public BoolEvent pauseEvent;
-    
+
     private CharacterController _characterController;
 
     private PlayerInput _playerInput;
@@ -29,7 +30,7 @@ public class PlayerController : CharacterMovement
 
     [Header("Gravity")] public float gravityAmount;
     public float gravityMin;
-    [ShowInInspector]private float _playerGravity;
+    [ShowInInspector] private float _playerGravity;
 
     [Header("Jump")] public Vector3 jumpForce;
     private Vector3 _jumpForceVelocity;
@@ -55,40 +56,57 @@ public class PlayerController : CharacterMovement
     private Vector3 _newMovementSpeedVelocity;
 
     private bool _isPause;
-    
+
     public override void Awake()
     {
         Application.targetFrameRate = 60;
         
-        _playerInput = new PlayerInput();
-
-        _playerInput.CharacterControl.Move.performed += e => inputMovement = e.ReadValue<Vector2>();
-        _playerInput.CharacterControl.View.performed += e => inputView = e.ReadValue<Vector2>();
-        _playerInput.CharacterControl.Jump.performed += e => Jump();
-        _playerInput.CharacterControl.Crouch.performed += e => Crouch();
-        _playerInput.CharacterControl.Sprint.performed += e => ToggleSprint();
-        _playerInput.CharacterControl.SprintReleased.performed += e => StopSprint();
+        SubscribeInputEvent();
         
-        _playerInput.Enable();
-
         // _newCameraRotation = cameraHolder.localRotation.eulerAngles;
         _newPlayerRotation = transform.localRotation.eulerAngles;
 
         _cameraHeight = cameraHolder.localPosition.y;
 
         _characterController = GetComponent<CharacterController>();
-        
+
         pauseEvent.Register(Pause);
     }
 
     private void OnDestroy()
     {
         pauseEvent.Unregister(Pause);
+
+        UnSubscribeInputEvent();
     }
 
+    private void SubscribeInputEvent()
+    {
+        _playerInput = new PlayerInput();
+
+        _playerInput.CharacterControl.Move.performed += UpdateMove;
+        _playerInput.CharacterControl.View.performed += UpdateView;
+        _playerInput.CharacterControl.Jump.performed += Jump;
+        _playerInput.CharacterControl.Crouch.performed += Crouch;
+        _playerInput.CharacterControl.Sprint.performed += ToggleSprint;
+        _playerInput.CharacterControl.SprintReleased.performed += StopSprint;
+        
+        _playerInput.Enable();
+    }
+
+    private void UnSubscribeInputEvent()
+    {
+        _playerInput.CharacterControl.Move.performed -= UpdateMove;
+        _playerInput.CharacterControl.View.performed -= UpdateView;
+        _playerInput.CharacterControl.Jump.performed -= Jump;
+        _playerInput.CharacterControl.Crouch.performed -= Crouch;
+        _playerInput.CharacterControl.Sprint.performed -= ToggleSprint;
+        _playerInput.CharacterControl.SprintReleased.performed -= StopSprint;
+    }
+    
     public override void Update()
     {
-        if(_isPause) return;
+        if (_isPause) return;
         CalculateView();
         CalculateMove();
         CalculateJump();
@@ -100,7 +118,85 @@ public class PlayerController : CharacterMovement
         _isPause = isPause;
         _characterController.Move(Vector3.zero);
     }
-    
+
+    private void UpdateMove(InputAction.CallbackContext context)
+    {
+        inputMovement = context.ReadValue<Vector2>();
+    }
+
+    private void UpdateView(InputAction.CallbackContext context)
+    {
+        inputView = context.ReadValue<Vector2>();
+    }
+
+
+    private void Jump(InputAction.CallbackContext context)
+    {
+        if (!_characterController.isGrounded) return;
+
+        jumpForce = Vector3.up * playerSettingModel.jumpHeight;
+        _playerGravity = 0;
+
+        if (playerStance == PlayerStance.Crouch)
+        {
+            if (StanceCheck(playerStandStance.stanceCollider.height)) return;
+
+            playerStance = PlayerStance.Stand;
+        }
+    }
+
+    private void Crouch(InputAction.CallbackContext context)
+    {
+        if (playerStance == PlayerStance.Crouch)
+        {
+            if (StanceCheck(playerStandStance.stanceCollider.height)) return;
+
+            playerStance = PlayerStance.Stand;
+            return;
+        }
+
+        if (StanceCheck(playerCrouchStance.stanceCollider.height)) return;
+
+        playerStance = PlayerStance.Crouch;
+    }
+
+    private bool StanceCheck(float stanceCheckHeight)
+    {
+        var feetPosition = feetTransform.position;
+        var radius = _characterController.radius;
+
+        var start = new Vector3(
+            x: feetPosition.x,
+            y: feetPosition.y + radius + StanceCheckErrorMargin + stanceCheckHeight,
+            z: feetPosition.z);
+        var end = new Vector3(
+            x: feetPosition.x,
+            y: feetPosition.y - radius - StanceCheckErrorMargin + stanceCheckHeight,
+            z: feetPosition.z);
+
+
+        return Physics.CheckCapsule(start, end, radius, playerMask);
+    }
+
+    private void ToggleSprint(InputAction.CallbackContext context)
+    {
+        if (inputMovement.y <= 0.2f)
+        {
+            isSprinting = false;
+            return;
+        }
+
+        isSprinting = !isSprinting;
+    }
+
+    private void StopSprint(InputAction.CallbackContext context)
+    {
+        if (playerSettingModel.sprintingHold)
+        {
+            isSprinting = false;
+        }
+    }
+
     private void CalculateView()
     {
         _newPlayerRotation.y +=
@@ -134,14 +230,14 @@ public class PlayerController : CharacterMovement
         {
             playerSettingModel.speedEffector = 1;
         }
-        
+
         var verticalSpeed = isSprinting
             ? playerSettingModel.runningForwardSpeed
             : playerSettingModel.walkingForwardSpeed;
         var horizontalSpeed = isSprinting
             ? playerSettingModel.runningStrafeSpeed
             : playerSettingModel.walkingStrafeSpeed;
-        
+
         verticalSpeed *= playerSettingModel.speedEffector;
         horizontalSpeed *= playerSettingModel.speedEffector;
 
@@ -178,94 +274,27 @@ public class PlayerController : CharacterMovement
     private void CalculateStance()
     {
         var currentStance = playerStandStance;
-        
+
         if (playerStance == PlayerStance.Crouch)
         {
             currentStance = playerCrouchStance;
         }
-        
+
         var cameraHolderLocalPosition = cameraHolder.localPosition;
         _cameraHeight = Mathf.SmoothDamp(cameraHolderLocalPosition.y, currentStance.cameraHeight,
             ref _cameraHeightVelocity, playerStanceSmoothing);
-        
+
         cameraHolderLocalPosition = new Vector3(
             x: cameraHolderLocalPosition.x,
             y: _cameraHeight,
             z: cameraHolderLocalPosition.z);
         cameraHolder.localPosition = cameraHolderLocalPosition;
-        
+
         _characterController.height = Mathf.SmoothDamp(_characterController.height, currentStance.stanceCollider.height,
             ref _stanceCapsuleHeightVelocity, playerStanceSmoothing);
-        
+
         _characterController.center = Vector3.SmoothDamp(_characterController.center,
             currentStance.stanceCollider.center,
             ref _stanceCapsuleCenterVelocity, playerStanceSmoothing);
-    }
-
-    private void Jump()
-    {
-        if (!_characterController.isGrounded) return;
-
-        jumpForce = Vector3.up * playerSettingModel.jumpHeight;
-        _playerGravity = 0;
-
-        if (playerStance == PlayerStance.Crouch)
-        {
-            if (StanceCheck(playerStandStance.stanceCollider.height)) return;
-
-            playerStance = PlayerStance.Stand;
-        }
-    }
-
-    private void Crouch()
-    {
-        if (playerStance == PlayerStance.Crouch)
-        {
-            if (StanceCheck(playerStandStance.stanceCollider.height)) return;
-
-            playerStance = PlayerStance.Stand;
-            return;
-        }
-
-        if (StanceCheck(playerCrouchStance.stanceCollider.height)) return;
-
-        playerStance = PlayerStance.Crouch;
-    }
-
-    private bool StanceCheck(float stanceCheckHeight)
-    {
-        var feetPosition = feetTransform.position;
-        var radius = _characterController.radius;
-
-        var start = new Vector3(
-            x: feetPosition.x,
-            y: feetPosition.y + radius + StanceCheckErrorMargin + stanceCheckHeight,
-            z: feetPosition.z);
-        var end = new Vector3(
-            x: feetPosition.x,
-            y: feetPosition.y - radius - StanceCheckErrorMargin + stanceCheckHeight,
-            z: feetPosition.z);
-
-
-        return Physics.CheckCapsule(start, end, radius, playerMask);
-    }
-
-    private void ToggleSprint()
-    {
-        if (inputMovement.y <= 0.2f)
-        {
-            isSprinting = false;
-            return;
-        }
-
-        isSprinting = !isSprinting;
-    }
-
-    private void StopSprint()
-    {
-        if (playerSettingModel.sprintingHold)
-        {
-            isSprinting = false;
-        }
     }
 }

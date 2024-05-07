@@ -65,7 +65,7 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
     public void Load(int id)
     {
         // var sceneData = GetSceneData(id);
-        StartCoroutine(LoadScene(false, id));
+        StartCoroutine(LoadScene(true, id));
     }
 
     public void Load(string sceneName)
@@ -113,7 +113,11 @@ public class LoadSceneManager : Singleton<LoadSceneManager>
             _loadSceneOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
 
+        var currentScene = SceneManager.GetSceneAt(1);
+        
         while (!_loadSceneOperation.isDone) yield return null;
+        
+        SceneManager.SetActiveScene(currentScene);
     }
 
     private IEnumerator UnloadScene(int id = -1, string sceneName = null)
@@ -151,10 +155,8 @@ public class SceneData
 
     [HideInInspector] [DisableInEditorMode] [DisableInPlayMode] [HideInTables]
     public string path;
-
-    [DisableInEditorMode] [DisableInPlayMode]
+    
     public string name;
-
-    [DisableIf(nameof(CantRemove))] public bool active;
-    private bool CantRemove => index is 0 or 1;
+    
+    public bool active;
 }

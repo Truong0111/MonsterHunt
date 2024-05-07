@@ -24,7 +24,6 @@ public class Hitbox : MonoBehaviour
 
     public void GetDamage(float damage)
     {
-        Debug.Log("call");
         var realDamage = damage;
 
         realDamage *= hitBoxType switch

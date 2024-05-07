@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : Character
 {
@@ -19,7 +20,13 @@ public class Player : Character
     public bool CanReload => CurrentWeapon.CanReload;
 
     public float MaxHealth { get; set; }
-    
+
+    public override void Awake()
+    {
+        base.Awake();
+        LevelManager.Instance.GetPlayer(this);
+    }
+
     public override void OnEnable()
     {
         base.OnEnable();

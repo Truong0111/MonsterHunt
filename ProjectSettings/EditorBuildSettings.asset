@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/MonsterHunt/Scenes/SplashScene.unity
     guid: f0df75cdcba27c3478ecfbc4b2810222
   - enabled: 1
@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MonsterHunt/Scenes/Test.unity
     guid: 554df89000de27542acfc5503ebc1372
-  - enabled: 0
+  - enabled: 1
     path: Assets/MonsterHunt/Scenes/Map_1.unity
     guid: 87cf5412cb389e44ab647c7fcbfa2945
   m_configObjects: {}
