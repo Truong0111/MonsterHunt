@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Enemy_Barbarian
   m_EditorClassIdentifier: 
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: Barbarian
       maxHealth: 150
       speed: 2
-      jumpForce: 20
+      jumpForce: 0
       armor: 1
     enemyType: 1
     enemyDrop: 0

@@ -126,6 +126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 718514430590976105}
   hitBoxType: 2
+  typeCollider: 0
+  colorCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &718514429956622949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 718514430590976105}
   hitBoxType: 1
+  typeCollider: 0
+  colorCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &718514430240994203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a4aa616eab8fb409ff44f6e4e01c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loseUIEvent: {fileID: 0}
   characterController: {fileID: 0}
   currentCharacterData:
     nameCharacter: 
@@ -317,13 +322,12 @@ MonoBehaviour:
     speed: 0
     jumpForce: 0
     armor: 0
-  animator: {fileID: 0}
   weapons: []
   characterAction: 0
   canMove: 0
   enemyDataSo: {fileID: 0}
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: 
       maxHealth: 0
       speed: 0
@@ -338,10 +342,12 @@ MonoBehaviour:
       attackDistance: 0
       attackRate: 0
       attackDetect: 0
+      speedBullet: 0
     enemy: {fileID: 0}
   enemyController: {fileID: 718514430590976110}
   enemyDetector: {fileID: 718514429870174853}
   rangeSphere: {fileID: 4385272467005338184}
+  enemyWeapons: []
 --- !u!114 &718514430590976110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61176fce37064999865aeb43cb40d4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 718514430590976105}
   enemyAttack: {fileID: 7662037668834143307}
   agent: {fileID: 718514430590976111}
   animator: {fileID: 0}
@@ -445,6 +452,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 718514430590976105}
   hitBoxType: 0
+  typeCollider: 0
+  colorCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &718514430592015717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +582,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 718514430590976105}
   hitBoxType: 3
+  typeCollider: 0
+  colorCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &718514431037900032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,6 +676,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 718514430590976105}
   hitBoxType: 3
+  typeCollider: 0
+  colorCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &718514431118368209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,6 +770,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 718514430590976105}
   hitBoxType: 2
+  typeCollider: 0
+  colorCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &718514431119138621
 MonoBehaviour:
   m_ObjectHideFlags: 0

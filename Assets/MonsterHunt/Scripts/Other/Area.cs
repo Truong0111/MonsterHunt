@@ -9,7 +9,7 @@ public class Area : MonoBehaviour
 
     public Enemy[] enemies;
 
-    public Barrier barrier;
+    public Barrier[] barriers;
 
     private void Start()
     {
@@ -29,13 +29,23 @@ public class Area : MonoBehaviour
 
     private void GetEnemyDie()
     {
-        CheckClearArea();
+        if (CheckClearArea())
+        {
+            OpenArea();
+        }
     }
-    
-    private void CheckClearArea()
+
+    private bool CheckClearArea()
     {
-        var isClear = enemies.All(enemy => enemy.characterAction == CharacterAction.Die);
-        barrier.OpenBarrier(isClear);
+        return enemies.All(enemy => enemy.characterAction == CharacterAction.Die);
+    }
+
+    private void OpenArea()
+    {
+        foreach (var barrier in barriers)
+        {
+            barrier.OpenBarrier(true);
+        }
         LevelManager.Instance.OpenTeleport(this);
     }
 }

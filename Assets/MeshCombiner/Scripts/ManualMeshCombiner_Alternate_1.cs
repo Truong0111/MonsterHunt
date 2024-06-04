@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using MeshCombiner_Rookie0ne;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace MeshCombiner_Rookie0ne
 {
     [ExecuteInEditMode]
     public class ManualMeshCombiner_Alternate_1 : MeshCombiner
     {
-        [FormerlySerializedAs("Notes2")] [TextArea(3, 3)] [SerializeField]
-        private string notes2 = "Place This Script on an empty Game object " +
-                                "and then assign the parent of the objects you want to combine to the corresponding field. " +
-                                "Then just hit the combineMeshes boolean and watch it work.";
-
         [Tooltip("In this field Assign the parent of the objects that you want to combine\n" +
                  "(for obvious reasons only objects with mesh filters and mesh renderers will be combined)")]
         [SerializeField]

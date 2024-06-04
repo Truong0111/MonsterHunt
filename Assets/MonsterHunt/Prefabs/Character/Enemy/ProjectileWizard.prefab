@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a4aa616eab8fb409ff44f6e4e01c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loseUIEvent: {fileID: 0}
   characterController: {fileID: 0}
   currentCharacterData:
     nameCharacter: 
@@ -119,13 +120,12 @@ MonoBehaviour:
     speed: 0
     jumpForce: 0
     armor: 0
-  animator: {fileID: 0}
   weapons: []
   characterAction: 0
   canMove: 0
   enemyDataSo: {fileID: 11400000, guid: b70354961c3dbf24a9a2a0021b10c738, type: 2}
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: 
       maxHealth: 0
       speed: 0
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61176fce37064999865aeb43cb40d4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 4154279050601919521}
   enemyAttack: {fileID: 4154279050601919520}
   agent: {fileID: 4154279050601919549}
   animator: {fileID: 7957320069837200978}

@@ -9,14 +9,14 @@ public class WeaponDrop : MonoBehaviour
 
     private void Awake()
     {
-        weapon = RandomWeapon();
+        // weapon = RandomWeapon();
     }
 
-    private Weapon RandomWeapon()
-    {
-        var weaponCount = weaponDataSo.weaponDatas.Count;
-        return weaponDataSo.weaponDatas[Random.Range(0, weaponCount)].weapon;
-    }
+    // private Weapon RandomWeapon()
+    // {
+    //     var weaponCount = weaponDataSo.weaponDatas.Count;
+    //     return weaponDataSo.weaponDatas[Random.Range(0, weaponCount)].weapon;
+    // }
 
     public WeaponDrop(Weapon weapon)
     {

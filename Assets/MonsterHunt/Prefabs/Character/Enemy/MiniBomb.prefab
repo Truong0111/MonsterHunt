@@ -76,6 +76,10 @@ PrefabInstance:
       value: MiniBomb
       objectReference: {fileID: 0}
     - target: {fileID: 718514430590976110, guid: 87f166b0aaeb68c47b0df578464b1de1, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 5935401775440335792}
+    - target: {fileID: 718514430590976110, guid: 87f166b0aaeb68c47b0df578464b1de1, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 2080673979252744448}

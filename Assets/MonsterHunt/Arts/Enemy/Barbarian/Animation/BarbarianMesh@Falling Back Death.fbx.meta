@@ -3,7 +3,12 @@ guid: e37d6a3e3c8fec64cb57da2b4f54ce04
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Barbarian_mat
+    second: {fileID: 2100000, guid: 26bf0a22c45061c4189133dfe2aa0d21, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

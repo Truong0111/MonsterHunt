@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ab874a1ba048c3adff0d1a0b4bccd4, type: 3}
   m_Name: WeaponDataSO
   m_EditorClassIdentifier: 
-  weaponDatas: []
+  gunDatas: []
+  swordDatas: []
   defaultWeapon:
     weapon: {fileID: -5193724988317483645, guid: 0ca7d11f7d1cabf498bdd83bab44543d, type: 3}
     prefab: {fileID: 1904925864879867224, guid: 0ca7d11f7d1cabf498bdd83bab44543d, type: 3}

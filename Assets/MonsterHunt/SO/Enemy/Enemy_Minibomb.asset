@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Enemy_Minibomb
   m_EditorClassIdentifier: 
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: Mini Bomb
       maxHealth: 10
       speed: 7
-      jumpForce: 20
+      jumpForce: 0
       armor: 0
     enemyType: 0
     enemyDrop: 0
@@ -28,4 +28,5 @@ MonoBehaviour:
       attackDistance: 2
       attackRate: 0
       attackDetect: 10
+      speedBullet: 0
     enemy: {fileID: 5935401775440335792, guid: f605c45b7756fa5438efb4f604fae7f6, type: 3}

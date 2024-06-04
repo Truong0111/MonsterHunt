@@ -9,7 +9,6 @@ public class WeaponController : MonoBehaviour
 {
     private Player _player;
     private PlayerController _playerController;
-    private PlayerInput _playerInput;
 
     public WeaponDataSO weaponDataSo;
 
@@ -19,21 +18,27 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = new PlayerInput();
+        GameManager.Instance.PlayerInput.Weapon.Fire1Pressed.performed += AttackPressed;
+        GameManager.Instance.PlayerInput.Weapon.Fire1Released.performed += AttackReleased;
+        GameManager.Instance.PlayerInput.Weapon.Reload.performed += Reload;
 
-        _playerInput.Weapon.Fire1Pressed.performed += e => AttackPressed();
-        _playerInput.Weapon.Fire1Released.performed += e => AttackReleased();
-        _playerInput.Weapon.Reload.performed += e => Reload();
+        GameManager.Instance.PlayerInput.Weapon.Swap.performed += Swap;
 
-        _playerInput.Weapon.Swap.performed += Swap;
-
-        _playerInput.Enable();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         weaponsEquipped = new Weapon[3];
 
         _playerController = GetComponentInParent<PlayerController>();
         _player = GetComponentInParent<Player>();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.PlayerInput.Weapon.Fire1Pressed.performed -= AttackPressed;
+        GameManager.Instance.PlayerInput.Weapon.Fire1Released.performed -= AttackReleased;
+        GameManager.Instance.PlayerInput.Weapon.Reload.performed -= Reload;
+
+        GameManager.Instance.PlayerInput.Weapon.Swap.performed -= Swap;
     }
 
     private void Start()
@@ -75,7 +80,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void AttackPressed()
+    private void AttackPressed(InputAction.CallbackContext context)
     {
         if (currentWeapon)
         {
@@ -83,7 +88,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void AttackReleased()
+    private void AttackReleased(InputAction.CallbackContext context)
     {
         if (currentWeapon)
         {
@@ -91,11 +96,11 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    public virtual void Reload()
+    public virtual void Reload(InputAction.CallbackContext context)
     {
-        if(!_player.CanReload) return;
-        if(!_player.CurrentWeapon.CanReload) return;
-        if(_player.CurrentWeapon.IsReloading) return;
+        if (!_player.CanReload) return;
+        if (!_player.CurrentWeapon.CanReload) return;
+        if (_player.CurrentWeapon.IsReloading) return;
         _player.CurrentWeapon.IsReloading = true;
         _playerController.Animator.SetTrigger(AnimatorConstant.ReloadHash);
         _player.CanAttack = false;
@@ -104,7 +109,7 @@ public class WeaponController : MonoBehaviour
     public virtual void Swap(InputAction.CallbackContext context)
     {
         var index = (int)context.ReadValue<float>() - 1;
-        if(weaponsEquipped[index] == null) return;
+        if (weaponsEquipped[index] == null) return;
         for (var i = 0; i < weaponsEquipped.Length; i++)
         {
             if (weaponsEquipped[i] == null) continue;

@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using Unity.Collections;
 using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 
 namespace MeshCombiner_Rookie0ne
 {
@@ -16,10 +14,7 @@ namespace MeshCombiner_Rookie0ne
 
         [Tooltip("Only for when when you get the error due to the amount of vertices.\n Otherwise leave to false")]
         [SerializeField] private bool useUint32 = false;
-        
-        [FormerlySerializedAs("Notes1")] [TextArea(2, 2)] [ReadOnly] [SerializeField]
-        private string notes1 = "I would not suggest using this script at runtime as it runs multiple calculations to achieve the final result.";
-        
+
         [Header("What to do with previous mesh holders")]
 
         [Tooltip("If true then all the objects that are set to be combined will be disabled in the hierarchy")]

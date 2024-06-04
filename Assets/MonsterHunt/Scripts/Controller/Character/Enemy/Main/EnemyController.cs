@@ -69,12 +69,15 @@ public class EnemyController : MonoBehaviour
         agent.isStopped = true;
     }
     public void SetSpeed(float speed) => agent.speed = speed;
-    
-    private void SetDestination(Vector3 target) => agent.destination = target;
+
+    private void SetDestination(Vector3 target)
+    {
+        agent.SetDestination(target);
+    }
     
     public void MoveWhenIdle()
     {
-        SetDestination(transform.GetNearRandomPosition(NoAttackMove / 2f, NoAttackMove));
+        SetDestination(transform.GetNearRandomPosition(NoAttackMove / 2f, NoAttackMove * 2f));
     }
     
     public void MoveWhenAttack()

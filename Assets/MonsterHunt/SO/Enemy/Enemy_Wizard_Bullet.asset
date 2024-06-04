@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Enemy_Wizard_Bullet
   m_EditorClassIdentifier: 
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: Wizard
       maxHealth: 100
-      speed: 7
-      jumpForce: 20
+      speed: 3.25
+      jumpForce: 0
       armor: 0
     enemyType: 1
     enemyDrop: 0

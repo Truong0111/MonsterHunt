@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Enemy_Giant
   m_EditorClassIdentifier: 
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: Giant
       maxHealth: 200
       speed: 2
-      jumpForce: 20
+      jumpForce: 0
       armor: 1
     enemyType: 1
     enemyDrop: 0

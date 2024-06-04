@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Enemy_Skeleton
   m_EditorClassIdentifier: 
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: Skeleton
-      maxHealth: 100
+      maxHealth: 50
       speed: 2
-      jumpForce: 20
+      jumpForce: 0
       armor: 2
     enemyType: 1
     enemyDrop: 0

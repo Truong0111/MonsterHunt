@@ -32,7 +32,19 @@ public class Player : Character
         base.OnEnable();
         Setup(playerDataSo.playerData);
     }
+    
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        CharacterDie -= OnCharacterDie;
+    }
 
+    public override void OnCharacterDie()
+    {
+        base.OnCharacterDie();
+        loseUIEvent.Raise(1);
+    }
+    
     public void Setup(PlayerData data)
     {
         currentCharacterData = data.characterData.Clone();

@@ -6,9 +6,11 @@ public enum GameState
     Shop,
     Setting,
     Lobby,
+    Pause,
     InGame,
     Revive,
-    EndGame,
+    Win,
+    Lose,
     Loading,
     Quit
 }
@@ -69,3 +71,18 @@ public enum WeaponType
     Melee
 }
 
+
+public enum EnemyRole
+{
+    MiniBomb,
+    ProjectileWizard,
+    Giant,
+    Skeleton,
+    Barbarian,
+    BossWolf,
+}
+
+public enum PlayerRole
+{
+    Default,
+}

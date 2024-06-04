@@ -2628,6 +2628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdbef51737f86d0479fd14f84dccaf5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loseUIEvent: {fileID: 11400000, guid: b0d80ebdb256c4547ab915b233f5dc58, type: 2}
   characterController: {fileID: 8540360021488942194}
   currentCharacterData:
     nameCharacter: 
@@ -2635,7 +2636,6 @@ MonoBehaviour:
     speed: 0
     jumpForce: 0
     armor: 0
-  animator: {fileID: 7579616287518227445}
   weapons: []
   characterAction: 0
   canMove: 0
@@ -2665,7 +2665,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 8540360021488942190}
   pauseEvent: {fileID: 11400000, guid: 4b62b3a555c81d240a2957e96e8c8b33, type: 2}
-  characterController: {fileID: 8540360021488942194}
+  winGameEvent: {fileID: 11400000, guid: ff490cc84be8a544e907434e74460178, type: 2}
+  loseGameEvent: {fileID: 11400000, guid: b0d80ebdb256c4547ab915b233f5dc58, type: 2}
   inputMovement: {x: 0, y: 0}
   inputView: {x: 0, y: 0}
   cameraHolder: {fileID: 8540360021615862079}

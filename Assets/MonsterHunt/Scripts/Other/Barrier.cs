@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
-    public Collider[] boxBarriers;
-
+    public Collider[] barriers;
+    public Collider[] barriersToOpens;
     private void Awake()
     {
-        foreach (var barrier in boxBarriers)
+        foreach (var barrier in barriers)
+        {
+            barrier.isTrigger = false;
+        }
+        
+        foreach (var barrier in barriersToOpens)
         {
             barrier.isTrigger = false;
         }
@@ -15,9 +20,9 @@ public class Barrier : MonoBehaviour
 
     public void OpenBarrier(bool isOpen)
     {
-        foreach (var barrier in boxBarriers)
+        foreach (var barrier in barriersToOpens)
         {
-            barrier.isTrigger = isOpen;
+            barrier.gameObject.SetActive(isOpen);
         }
     }
 }

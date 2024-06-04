@@ -1,12 +1,28 @@
-public class Enums
+public enum EnemyClass
 {
-    public enum EnemyType
-    {
-        MiniBomb,
-        ProjectileWizard,
-        Giant,
-        Skeleton,
-        Barbarian,
-        BossWolf,
-    }
+    MiniBomb,
+    ProjectileWizard,
+    Giant,
+    Skeleton,
+    Barbarian,
+    BossWolf,
+}
+
+
+public enum FireType
+{
+    Semi,
+    Auto
+}
+
+public enum BulletSpawnType
+{
+    None,
+    Spawn,
+}
+
+public enum BulletType
+{
+    Five,
+    Seven
 }

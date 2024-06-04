@@ -8,10 +8,11 @@ using static Model;
 public class PlayerController : CharacterMovement
 {
     public BoolEvent pauseEvent;
+    public IntEvent winGameEvent;
+    public IntEvent loseGameEvent;
 
     private CharacterController _characterController;
 
-    private PlayerInput _playerInput;
     [HideInInspector] public Vector2 inputMovement;
     [HideInInspector] public Vector2 inputView;
 
@@ -56,61 +57,76 @@ public class PlayerController : CharacterMovement
     private Vector3 _newMovementSpeedVelocity;
 
     private bool _isPause;
-
+    private bool _isWin;
+    private bool _isLose;
+    
     public override void Awake()
     {
         Application.targetFrameRate = 60;
-        
-        SubscribeInputEvent();
-        
-        // _newCameraRotation = cameraHolder.localRotation.eulerAngles;
-        _newPlayerRotation = transform.localRotation.eulerAngles;
-
-        _cameraHeight = cameraHolder.localPosition.y;
 
         _characterController = GetComponent<CharacterController>();
 
         pauseEvent.Register(Pause);
+        winGameEvent.Register(Win);
+        loseGameEvent.Register(Lose);
+        
+        SubscribeInputEvent();
+    }
+
+    private void OnEnable()
+    {
+        _newPlayerRotation = transform.localRotation.eulerAngles;
+        _cameraHeight = cameraHolder.localPosition.y;
     }
 
     private void OnDestroy()
     {
         pauseEvent.Unregister(Pause);
+        winGameEvent.Register(Win);
+        loseGameEvent.Register(Lose);
 
         UnSubscribeInputEvent();
     }
 
     private void SubscribeInputEvent()
     {
-        _playerInput = new PlayerInput();
-
-        _playerInput.CharacterControl.Move.performed += UpdateMove;
-        _playerInput.CharacterControl.View.performed += UpdateView;
-        _playerInput.CharacterControl.Jump.performed += Jump;
-        _playerInput.CharacterControl.Crouch.performed += Crouch;
-        _playerInput.CharacterControl.Sprint.performed += ToggleSprint;
-        _playerInput.CharacterControl.SprintReleased.performed += StopSprint;
-        
-        _playerInput.Enable();
+        GameManager.Instance.PlayerInput.CharacterControl.Move.performed += UpdateMove;
+        GameManager.Instance.PlayerInput.CharacterControl.View.performed += UpdateView;
+        GameManager.Instance.PlayerInput.CharacterControl.Jump.performed += Jump;
+        GameManager.Instance.PlayerInput.CharacterControl.Crouch.performed += Crouch;
+        GameManager.Instance.PlayerInput.CharacterControl.Sprint.performed += ToggleSprint;
+        GameManager.Instance.PlayerInput.CharacterControl.SprintReleased.performed += StopSprint;
     }
 
     private void UnSubscribeInputEvent()
     {
-        _playerInput.CharacterControl.Move.performed -= UpdateMove;
-        _playerInput.CharacterControl.View.performed -= UpdateView;
-        _playerInput.CharacterControl.Jump.performed -= Jump;
-        _playerInput.CharacterControl.Crouch.performed -= Crouch;
-        _playerInput.CharacterControl.Sprint.performed -= ToggleSprint;
-        _playerInput.CharacterControl.SprintReleased.performed -= StopSprint;
+        GameManager.Instance.PlayerInput.CharacterControl.Move.performed -= UpdateMove;
+        GameManager.Instance.PlayerInput.CharacterControl.View.performed -= UpdateView;
+        GameManager.Instance.PlayerInput.CharacterControl.Jump.performed -= Jump;
+        GameManager.Instance.PlayerInput.CharacterControl.Crouch.performed -= Crouch;
+        GameManager.Instance.PlayerInput.CharacterControl.Sprint.performed -= ToggleSprint;
+        GameManager.Instance.PlayerInput.CharacterControl.SprintReleased.performed -= StopSprint;
     }
-    
+
     public override void Update()
     {
+        if (_isWin) return;
+        if (_isLose) return;
         if (_isPause) return;
         CalculateView();
         CalculateMove();
         CalculateJump();
         // CalculateStance();
+    }
+
+    private void Win()
+    {
+        _isWin = !_isWin;
+    }
+    
+    private void Lose()
+    {
+        _isLose = !_isLose;
     }
 
     private void Pause(bool isPause)

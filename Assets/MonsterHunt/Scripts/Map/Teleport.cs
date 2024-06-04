@@ -12,20 +12,14 @@ public class Teleport : MonoBehaviour
         NextMap
     }
 
-    private PlayerInput _playerInput;
-    
     private void Awake()
     {
-        _playerInput = new PlayerInput();
-
-        _playerInput.Interact.Interact.performed += Interact;
-        
-        _playerInput.Enable();
+        GameManager.Instance.PlayerInput.Interact.Interact.performed += Interact;
     }
 
     private void OnDestroy()
     {
-        _playerInput.Interact.Interact.performed -= Interact;
+        GameManager.Instance.PlayerInput.Interact.Interact.performed -= Interact;
     }
 
     public TypeTeleport typeTeleport;

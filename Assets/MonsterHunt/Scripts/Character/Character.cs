@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Character : MonoBehaviour
 {
+    public IntEvent loseUIEvent;
+    
     public CharacterController characterController;
     public CharacterData currentCharacterData;
 
@@ -25,9 +28,7 @@ public class Character : MonoBehaviour
     public virtual void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
-        characterController = GetComponent<CharacterController>();
-
-        
+        characterController = GetComponent<CharacterController>(); 
     }
 
     public virtual void OnEnable()
@@ -36,7 +37,7 @@ public class Character : MonoBehaviour
         CharacterDie += OnCharacterDie;
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         CharacterDie -= OnCharacterDie;
     }
@@ -71,6 +72,7 @@ public class Character : MonoBehaviour
     {
         if(characterAction == CharacterAction.Die) return;
         UpdateState(CharacterAction.Die);
+        CharacterDie?.Invoke();
     }
 
     public virtual void Attack()

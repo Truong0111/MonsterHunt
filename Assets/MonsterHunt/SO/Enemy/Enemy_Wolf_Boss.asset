@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Wolf_Boss
   m_EditorClassIdentifier: 
   enemyData:
-    characterData:
+    enemyData:
       nameCharacter: Wolf
       maxHealth: 2000
       speed: 10

@@ -1,8 +1,14 @@
+using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : Singleton<LevelManager>
 {
+    public CharacterContainer CharacterContainer { get; set; }
+    
+    public Transform playerStartTransform;
     public Player Player { get; set; }
 
     public List<Area> areas = new();
@@ -26,6 +32,14 @@ public class LevelManager : Singleton<LevelManager>
             var area = areas[i];
             area.id = i;
         }
+
+        teleport.gameObject.SetActive(false);
+        CharacterContainer = GameManager.Instance.characterContainer;
+    }
+
+    private void Start()
+    {
+        SpawnPlayer();
     }
 
     public void OpenTeleport(Area areaClear)
@@ -34,5 +48,17 @@ public class LevelManager : Singleton<LevelManager>
         {
             teleport.gameObject.SetActive(true);
         }
-    } 
+    }
+
+    public void SpawnPlayer()
+    {
+        var player = CharacterContainer.GetPlayer(PlayerRole.Default);
+        player.GetComponent<PlayerController>().MovePlayerController(playerStartTransform);
+        Player = player;
+
+        if (player.gameObject.scene != SceneManager.GetSceneAt(1))
+        {
+            SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneAt(1));
+        }
+    }
 }
